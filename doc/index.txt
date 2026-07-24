@@ -1,0 +1,7 @@
+Day-1: Git, GitHub, windows shell
+Day-2: Linux, Networking, Shell Continuation
+Day-3: Java Introduction, OOPs, Java Continuation
+Day-4: DSA, Java Collections
+Day-5: Java Multithreading, Java 8 Features
+Day-6: Java 8 Continuation and Lambda Practice, SOLID Principals, Introduction to JUnit, JVM
+Day-7: More into JUnit

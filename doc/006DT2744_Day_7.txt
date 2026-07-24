@@ -1,0 +1,388 @@
+Day 7 - 24th July 2026
+
+
+Task 01
+
+Basic Test Case
+
+package Junit;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+
+class Demo01_Basic_UnitTest {
+
+
+   @Test
+   void testAddition() {
+       Demo01_Calculator calc = new Demo01_Calculator();
+       assertEquals(15, calc.add(10, 5));
+   }
+   @Test
+   void testAdditionFail() {
+       Demo01_Calculator calc = new Demo01_Calculator();
+       //fails
+       assertEquals(20, calc.add(10, 5), "Expected 20 but actual is 15");
+   }
+}
+
+
+The java file is 
+package Junit;
+public class Demo01_Calculator {
+   // Simple addition method
+   public int add(int a, int b) {
+       return a + b;
+   }
+}
+
+
+
+Task 02:
+
+
+package Junit;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+
+public class Demo02_Exception_Testing {
+   @Test
+   void testWithdrawInsufficientFunds() {
+       Demo02_BankAccount account = new Demo02_BankAccount("123", 100.0);
+
+
+       Exception ex = assertThrows(IllegalArgumentException.class, () -> {
+           account.withdraw(200.0);
+       });
+
+
+       assertEquals("Insufficient balance", ex.getMessage());
+   }
+}
+
+
+
+Jav code 
+package Junit;
+
+
+public class Demo02_BankAccount {
+    private String accountNumber;
+   private double balance;
+
+
+   public Demo02_BankAccount(String accountNumber, double balance) {
+       this.accountNumber = accountNumber;
+       this.balance = balance;
+   }
+
+
+   public String getAccountNumber() {
+       return accountNumber;
+   }
+
+
+   public double getBalance() {
+       return balance;
+   }
+
+
+   public void deposit(double amount) {
+       if (amount <= 0) {
+           throw new IllegalArgumentException("Deposit must be positive");
+       }
+       balance += amount;
+   }
+
+
+   public void withdraw(double amount) {
+       if (amount > balance) {
+           throw new IllegalArgumentException("Insufficient balance");
+       }
+       balance -= amount;
+   }
+}
+
+
+Task 03:
+
+For above code create fail test cases
+
+package Junit;
+
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+
+class Demo02_BankAccountTest {
+   @Test
+   void testDepositFail() {
+       Demo02_BankAccount account = new Demo02_BankAccount("123", 500.0);
+       account.deposit(200.0);
+       //fails
+       assertEquals(800.0, account.getBalance(), "Expected 800 but got " + account.getBalance());
+   }
+
+
+   @Test
+   void testWithdrawFail() {
+       Demo02_BankAccount account = new Demo02_BankAccount("123", 500.0);
+       account.withdraw(200.0);
+       //fails
+       assertEquals(400.0, account.getBalance(), "Expected 400 but got " + account.getBalance());
+   }
+
+
+   @Test
+   void testExceptionFail() {
+       Demo02_BankAccount account = new Demo02_BankAccount("123", 100.0);
+       //fails
+       assertThrows(IllegalArgumentException.class, () -> account.withdraw(50));
+   }
+}
+
+
+Task 04:
+
+Create a java code for the Parameterised Test case
+
+package Junit;
+
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+
+class Demo03_Parameterized_Test {
+
+
+   @ParameterizedTest
+   @ValueSource(strings = {"amma", "mom", "nitin"})
+   void testPalindromePass(String candidate) {
+       assertTrue(Demo03_StringUtils.isPalindrome(candidate));
+   }
+   //fail
+   @Test
+   void testPalindromeFail() {
+       // "hello" is NOT a palindrome, so this will fail
+       assertTrue(Demo03_StringUtils.isPalindrome("hello"), "Expected true but got false");
+   }
+
+
+   @ParameterizedTest
+   @ValueSource(strings = {"java", "spring", "bank"})
+   void testNotPalindrome(String candidate) {
+       assertFalse(Demo03_StringUtils.isPalindrome(candidate));
+   }
+}
+
+11.34 to 11.40
+
+Java code 👍
+
+package Junit;
+
+
+public class Demo03_StringUtils {
+   public static boolean isPalindrome(String str) {
+       if (str == null) return false;
+       String reversed = new StringBuilder(str).reverse().toString();
+       return str.equalsIgnoreCase(reversed);
+   }
+}
+
+
+Task 05:
+What is Junit Life cycle hook (set up tear down) ?
+
+11.41 to 11.43
+
+Task 06:
+
+Create a java code for life cycle hook setup/ tear down test file
+
+package Junit;
+
+
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+
+public class Demo04_LifeCycleHooks_Setup_TearDown {
+   private Demo04_DatabaseService db;
+
+
+   @BeforeEach
+   void init() {
+       db = new Demo04_DatabaseService();
+       db.connect();
+   }
+
+
+   @AfterEach
+   void cleanup() {
+       db.disconnect();
+   }
+
+
+   @Test
+   void testInsertAndFetchPass() {
+       db.insert("user1", "Prasunamba");
+       assertEquals("Prasunamba", db.fetch("user1"));
+   }
+
+
+   //fails
+   @Test
+   void testInsertAndFetchFailValue() {
+       db.insert("user1", "Prasunamba");
+       // This will fail because actual = "Prasunamba", expected = "WrongName"
+       assertEquals("WrongName", db.fetch("user1"), "Expected WrongName but got " + db.fetch("user1"));
+   }
+
+
+   //fails
+   @Test
+   void testFetchNonExistentKeyFail() {
+       // No insert performed, so fetch returns null
+       assertEquals("SomeValue", db.fetch("missingKey"), "Expected SomeValue but got null");
+   }
+}
+
+
+11.44 to 11.50
+
+Task 07:
+
+What are assertions in Junit 5.. Explain
+
+11.52 to 11.55
+
+Task 08:
+What is time test performance service means 👍?
+
+11.56 to 11.58
+
+Task 09:
+
+For the given timeout test Performance Service can you create a java code 
+
+package Junit;
+
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTimeout;
+import java.time.Duration;
+
+
+class Demo06_TimeoutTest_PerformanceCheck {
+   @Test
+   void testQuickExecutionPass() {
+       Demo06_PerformanceService service = new Demo06_PerformanceService();
+       assertTimeout(Duration.ofMillis(500), () -> {
+           service.quickOperation(); // completes in 100ms
+       });
+   }
+   //fails
+   @Test
+   void testSlowExecutionFail() {
+       Demo06_PerformanceService service = new Demo06_PerformanceService();
+       assertTimeout(Duration.ofMillis(500), () -> {
+           service.slowOperation(); // takes 1000ms, exceeds timeout
+       });
+   }
+
+
+  //fails
+   @Test
+   void testUnrealisticTimeoutFail() {
+       Demo06_PerformanceService service = new Demo06_PerformanceService();
+       assertTimeout(Duration.ofMillis(50), () -> {
+           service.quickOperation(); // takes ~100ms, exceeds 50ms
+       });
+   }
+}
+
+11.59 to 12.09
+
+Task 10:
+
+Now what do you think are the different types of Junit 5 tests we have … list them down
+
+12.10 to 12.15
+
+
+
+
+
+
+
+
+
+================================================================================================================================================
+
+
+Add ons:
+
+
+For your bank account java code here is your Nested Tests - organised Scenarios that you can write..
+
+
+
+package Junit;
+
+
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+
+class Demo05_NestedTests_OrganizedScenarios {
+   @Nested
+   class DepositTests {
+       @Test
+       void testDepositPositiveAmountPass() {
+           Demo05_BankAccount account = new Demo05_BankAccount("123", 500.0);
+           account.deposit(200.0);
+           assertEquals(700.0, account.getBalance()); // ✅ passes
+       }
+
+
+       @Test
+       void testDepositFail() {
+           Demo05_BankAccount account = new Demo05_BankAccount("123", 500.0);
+           account.deposit(200.0);
+           //fails
+           assertEquals(800.0, account.getBalance(), "Expected 800 but got " + account.getBalance());
+       }
+   }
+
+
+   @Nested
+   class WithdrawTests {
+       @Test
+       void testWithdrawValidAmountPass() {
+           Demo05_BankAccount account = new Demo05_BankAccount("123", 500.0);
+           account.withdraw(100.0);
+           assertEquals(400.0, account.getBalance()); // ✅ passes
+       }
+
+
+       @Test
+       void testWithdrawFail() {
+           Demo05_BankAccount account = new Demo05_BankAccount("123", 500.0);
+           account.withdraw(100.0);
+           //fails
+           assertEquals(300.0, account.getBalance(), "Expected 300 but got " + account.getBalance());
+       }
+   }
+}
+

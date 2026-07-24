@@ -1,0 +1,83 @@
+Day 6 - 23nd July 2026
+
+
+
+task 4: You need to create an interface 
+-> with one abstract method (SAM) and 1 normal method
+
+-> can you create 2 normal methods?
+
+-> can I have a method with abstract keyword
+
+Task 5: Zero Parameterized lambda
+
+Task 6:
+Wap to create an array list
+Use lambda exp in foreach 
+Check if the num is even or odd
+
+Task 7: What is JUnit?
+JUnit is a unit testing tool/Framework for java programs. It is mainly used to run test cases for
+individual methods or classes to ensure the logic is right and giving desired results.
+
+
+Task 8: List down the annotations of JUnit 5.
+Core testing annotations: @Test, @ParameterizedTest, @RepeatedTest
+Lifecycle annotations: @BeforeEach, @AfterEach, @BeforeAll, @AfterAll
+Configuration and filtering annotations: @Disabled, @DisplayName, @Tag
+
+Task 9: Difference Between JUnit 5 and JUnit 4
+JUnit 5 works on Java 8 and later version, JUnit 4 works on versions previous of java8.
+JUnit 5 supports lambda expressions, JUnit 4 does not.
+Name of Annotations got modified in Junit 5, previously annotations were more focused on class,
+(e.g. BeforeClass, AfterClass etc), in JUnit5 it renamed to -All, more generalized one.
+
+Task 10: What is JUnit Test Suite?
+JUnit Test Suite is nothing but the collections of multiple test JUnit test cases groupped together,
+so that it can be executed together as a batch.
+
+Task 11: What is Junit Vintage?
+JUnit Vintage is a Test Engine to run JUnit 4 and previous version JUnit 4 codes.
+for JUnit 5, JUnit Jupiter is used.
+
+Task 12: What are mock Objects?
+: Need to Study
+
+Task 13: Write about Mockito?
+Mockito is a java framework that helps to create and configure Mock Objects and Classes for
+JUnit Testing.
+
+Task 14: Define Functional interface a java 8 feature
+Functional interfaces in Java 8 allow us to restrict putting more than one abstract methods to a
+interface.
+
+Task 15: What are default and static methods in interfaces
+default methods in interfaces are the methods which we are not abstract, i.e. you can define the
+methods within the interface itself.
+static methods are similar to default methods, you can define it within the interface. For static 
+interface methods, we cannot override it (not inheritable), we do not need to create object to call that method, we
+can directly call the static method by InterfaceName.static_method(). 
+
+Task 16: in Java 8 Stream API
+
+
+Task 17: What is Optional class in Java 8?
+Optional class 
+
+Task 18: What is error in the below Optional class – which is a feature of java 8?
+
+package org.example;
+import java.util.Optional;
+
+public class Demo040_Optional {
+   public static void main(String[] args) {
+       String user = "Prasunamba";
+       Optional.ofNullable(user).map(User::getName).orElse("Guest"); [1];
+   }
+}
+
+
+-----------------------------------
+What is Garbage Collector and What are the Types of Objects in Java.
+------------------------------------
+

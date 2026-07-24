@@ -1,0 +1,28 @@
+Day 1 - 16th July 2026
+
+Task 1:
+What is Git?
+: Git is a version controlling system, to track any changes in our file system or project repository. It helps us to revert to previous versions of the project source code if needed. 
+
+Task 2:
+What is GitHub?
+: GitHub is a remote cloud platform to store our project source codes and also helps us to collaborate with across team members.
+
+
+Task 3:
+What is the difference between Git and GitHub?
+GitHub is a cloud platform and Git is a version controlling Tool.
+GitHub is used for storing files, where as git is used to manage the various states or versions those files
+By using Git Command, we can perform many operations in our GitHub Repositories (e.g. clone, push, pull, branching etc)
+
+Task 4:
+What is staging Area?
+Staging area is the area or state, in which a files gets tracked by git. When a file is moved to the staging area in git, that means that file is now tracked by git, i.e. we can switch to different versions of the files.
+
+Task 5:
+What do you know about vcs?
+VCS, stands for version control system. It is a tool to track file's version from one phase to another phase. e.g. we make changes to a file or files, and we want to go back to the previous version of the file (state before changes), we can do it with a vcs tool.
+
+Task 6:
+What do you understand by fork?
+Fork is the process to clone a Remote repository from someone else's account/workspace to our own account or workspace. It is similar to clone, the only difference is in cloning we bring remote repository to local machine, in case of fork we bring remote repo to remote repo, from someone else's account to our own account.

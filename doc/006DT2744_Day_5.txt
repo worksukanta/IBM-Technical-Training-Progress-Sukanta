@@ -1,0 +1,81 @@
+Day 5 - 22nd July 2026
+
+Task 1:
+
+Wap to run 3 threads running simultaneously
+9.07 to 9.10
+
+Task 2:
+
+In the above program make 
+T1 → sleep for 2 sec
+T2 → sleep for 1 sec
+T3 → sleep for 0 sec
+
+9.11 to 9.17
+
+Task 3:
+
+In the same prog 
+Give the names as 
+T1 → Morning
+T2 → afternoon
+T3 → evening
+
+9.18 to 9.22
+
+Task 4:
+
+In the same code 
+Set 
+T1 → max priority
+T2 → normal priority
+T3 → min priority
+
+9.23 to 9.25 to 9.30
+
+Task 5:
+
+Wap to run threads in a loop.. of 1 to 20..
+10.10 to 10.15
+Print the dumpstack..
+
+
+
+Task 6:
+Check for isalive status of a thread..
+10.25 to 10.27
+
+Task 7:
+Check the same code with synchronized keyword
+10.45 to 10.50
+
+10.50 to 11.05 break
+
+Task 8:
+
+Wap to display the exception handling concept..
+
+Try , catch , finally..
+11.48 to 11.52
+
+
+
+Home Tasks:
+
+Work on circular and doubly linked list   — pending from yesterday
+Multi threading concepts .. 
+
+
+
+
+
+
+
+
+
+
+Multithreading – go through the doc multithreading and synchronized doc 
+
+
+

@@ -1,0 +1,76 @@
+Day 4 - 21th July 2026
+
+--------------------------------------------------
+Task 1: write a program to demonstrate polymorphism in java.
+
+
+
+
+Task 2: Write a brief history about java.
+Java was created in 1991 by James Gosling and his team at Sun Microsystems. After Oracle acquired it.
+
+Task 3:
+Wap to dislay Linked list using 
+Package 
+Import java.util.Linkedlist
+10.20 to 10.25
+
+Task 4:
+Wap to show how custom defined Linked list work
+Create a node 
+Then add elements 
+Display
+
+Task 5:
+Wap to add and display elements in a built in stack
+Import java.util.Deque;
+Import java.util.Arraydeque;
+
+No stack — legacy code
+
+
+
+Task 6:
+Wap to create a builtin Queue and display the elements 
+Import java.util.LinkedList
+Import java.util.Queue;
+
+
+Task 7: Wap to demonstrate Method overriding.
+
+Task 8: What are the advantages of Polymorphism.. Brief it.
+Polymorphism helps us to modify a method/constructor definition as per requirement. 
+e.g. If we want one single method to accept 1, 2, 3 or more number of parameters, we can
+achieve this with polymorphism property.
+
+
+Task 9:
+Wap to show the encapsulation feature in java
+Use getters and setters
+
+Task 10: What are the advantages and disadvantages of encapsulation
+advantages: It helps to impose data hiding, access control. 
+disadvantages: Need to write extra codes, can create confusion while debugging
+
+Task 11: Wap to use the concept of type casting:
+
+Task 12: What is auto boxing and auto unboxing
+Boxing: Autoboxing is the automatic conversion that the Java compiler makes between a primitive type 
+and its corresponding object wrapper class.
+Unboxing: Wrapper Class to Primitive Data Types. 
+// Example in an expression
+Integer x = 50; // Autoboxing
+Integer y = 20; // Autoboxing
+int sum = x + y; // Unboxing happens to both x and y so they can be added together
+
+
+
+ 
+
+
+Home tasks:
+
+Wap to create  a doubly linked list
+Wap to create a circular linked list
+
+

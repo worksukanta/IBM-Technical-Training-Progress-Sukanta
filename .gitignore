@@ -1,0 +1,32 @@
+# Compiled Java files
+*.class
+
+# Maven build output
+target/
+
+# VS Code settings
+.vscode/
+
+# Eclipse IDE files (if ever used)
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA files (if ever used)
+.idea/
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+
+# Maven wrapper generated files (ignore only if you don't want to commit them)
+.mvn/wrapper/maven-wrapper.jar
