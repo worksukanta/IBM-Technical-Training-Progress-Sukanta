@@ -1,0 +1,54 @@
+Day 8 - 27th July 2026
+
+
+Task 01
+
+java --version
+
+mvn --version
+
+/* Creating a MAVEN Project*/
+>mvn archetype:generate -DgroupId=com.bank -DartifactId=Demo02_DependencyInjection -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+/* check whether build is a success or not */
+mvn clean install
+
+/* Clear Cache, and Compile */
+mvn clean compile
+
+/* Run Application*/
+mvn exec:java -Dexec.mainClass="com.bank.App"
+
+Task 01: What do you understand by Spring frame work?
+Spring Framework is a java framework to create Enterprise software solutions, web applications, 
+RestAPIs etc. It provides a pre-written boiler plate code and database and web server support
+which makes the development much more easier.
+
+
+Task 02: What is spring boot?
+12.21 to 12.23
+
+Task 03: What is the diff b/w spring framework and spring boot?
+12.24 to 12.26
+
+Task 04: What is Dependency Injection?
+Dependency Injection is software design pattern, where rather than creating objects directly with
+new keyword (or other traditional OOP object creation process), we create objects from external
+source (e.g. from context xml in spring). It provides another layer of security/abstraction. It
+helps to achieve loose coupling, better testibility and cleaner code maintenance.
+
+Task 05: create a simple OrderService that depends on a PaymentService. Instead of creating objects manually, inject them.
+
+interfaces:
+
+paymentService '  ----> credit card or debit card class
+and orderservice  ---> PaymentService implementation class
+
+* Done, present in src folder, also showed to ma'am.
+
+Task 06:
+
+—----------------------------------------------------------------------------------------------------------------------------*************************************************************************************************************
+Dependency Check, Inner beans and Scopes 
+
+** Done, check in src folder, also showed to ma'am.

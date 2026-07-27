@@ -1,0 +1,23 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+   <!-- Choose implementation -->
+   <bean id="notificationService" class="com.bank.EmailNotificationService"/>
+   <bean id="debitCardService" class="com.bank.DebitCardService"/>
+   <bean id="creditCardService" class="com.bank.CreditCardService"/>
+
+
+   <!-- Inject dependency -->
+   <bean id="fundTransferService" class="com.bank.FundTransferService">
+       <constructor-arg ref="notificationService"/>
+   </bean>
+   <bean id="debitOrderService" class="com.bank.OrderService">
+       <constructor-arg ref="debitCardService"/>
+   </bean>
+   <bean id="creditOrderService" class="com.bank.OrderService">
+       <constructor-arg ref="creditCardService"/>
+   </bean>
+</beans>
