@@ -1,0 +1,200 @@
+Day 8 - 28th July 2026
+
+
+Task 01: Can you create a Maven based spring project using ide.. To print a welcome..note
+9.04 to 9.08
+mvn archetype:generate -DgroupId=com.school -DartifactId=SpringRevision -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+Task 2:
+
+Now create a POJO class for student so that can be managed as  a spring bean
+9.09 to 9.14
+
+Task 3:
+Configure the above Student bean in the bean-factory-demo.xml file.
+That means you need to configure the Student bean in the XML file so the BeanFactory knows how to create it.
+And create a main class and run 
+
+Task 4:
+Can you explain application context with the syntax. ->
+-> Application Context in Spring is the IOC(Inversion of Control) container or an external file,
+that is used for instantiating, configuring and managing of application objects or Beans.
+example:
+ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+in the applicationContext.xml file, we are declaring beans and providing external values for them.
+and using that, the context object can use the getBean("beanId") method and create a bean.
+-----------------------------------------------------
+Task 5:
+Why use application context .. plz list some uses?
+->
+Automated Dependency Injection (DI): we don't need to create objects manually, the IOC container
+does this for us. It makes the system loosely coupled.
+
+Lifespan and Memory Management (Bean Scopes): 
+its helps to control the scope of a bean, and do not rely solely on POJOs. There are multiple
+scopes that we can achieve like: Singleton, Prototype, Webscopes
+
+Early Configuration Error Checking: if we make any errors in the Configuration file, as during 
+compilation Singleton objects get created, it will show us the errors immediately.
+
+Modern Support For Annotations: it provides various Annotations support that increases code
+readability and Clean Connectivity with the Classes. there are Annotations like @Component,
+@Repository, @Autowired, @Service
+------------------------------------
+Task 6:
+What are features of Spring Framework .. list them with 1 or 2 lines explanation?
+1. Dependency Injection and IOC (Inversion of Control)
+2. Aspect Oriented Programming (AOP)
+3. Spring MVC Architechture
+4. Data Access and Transaction Management (using Hibernate, JDBC, JPA etc)
+5. Springboot
+-----------------------
+Task 7:
+Why do you think we use spring framework.. Advantages list them down?
+-> 1.Elimination of Boilerplate Code: Spring cuts the overhead of writing a lot boiler plate code
+2. Loose Coupling via Dependency Injection
+3. Lightweight Container Runtime: Spring is non-invasive; you do not need to inherit heavy 
+framework classes or implement restrictive interfaces. Your application components remain 
+plain old Java objects (POJOs).
+4. Powerful Transaction Management
+5. Massive Ecosystem and Integration: Spring integrates seamlessly with almost any popular Java tool
+or library (such as Hibernate, Kafka, or Quartz). Its sister projects (Spring Security, Spring Cloud)
+provide ready-made solutions for security and microservices.
+
+
+Task 8:
+What do you understand by IOC? Explain with diagram.. 
+-> IOC is nothing but a software engineering architectural pattern, where we move the object 
+creation, configuration controls from the Application Program to some external container.
+TRADITIONAL APPROACH (Your code is the driver)
++--------------------------------------------------------+
+
+|  [ Your Application Code ]                             |
+|          |                                             |
+|          +---> Uses 'new' keyword to create Object A   |
+|          |                                             |
+|          +---> Manually creates and injects Object B   |
++--------------------------------------------------------+
+
+SPRING IOC APPROACH (The Container is the driver)
++--------------------------------------------------------+
+
+|  [ Spring IoC Container ]                              |
+|          |                                             |
+|          |-- Instantiates Object A                     |
+|          |-- Instantiates Object B                     |
+|          |-- Injects Object B into Object A            |
+|          v                                             |
+|  [ Your Application Code ]                             |
+|          |                                             |
+|          +---> Simply requests/uses configured objects |
++--------------------------------------------------------+
+
+---------------------------------------------
+Task 9:
+How many types of IOC do you have in spring?
+What are they with explanation
+There is only one type of IOC in Spring.It can be implemented with two different types of IOC
+Containers, 1. BeanFactory 2. ApplicationContext. Nowadays only ApplicationContext is getting 
+used in the industry.
+
+
+Task 10:
+What is DI in spring?
+Dependency Injection (DI) is the design pattern used to implement Inversion of Control (IoC) in 
+Spring. It is the process where the Spring container automatically delivers required external 
+objects (dependencies) to a class, rather than making the class create them itself. Instead of 
+using the new keyword inside a class to instantiate dependent objects, you let Spring "inject" 
+those objects through constructors, setters, or fields.
+
+Task 11:
+How many types of DI do we have? Explain.
+We have two types of DI in Spring. One is constructor Injection and Setter Injection.
+/* constructor injection */
+@Component
+public class School {
+    private final Student student;
+
+    // Injected automatically at construction time
+    @Autowired
+    public School(Student student) {
+        this.student = student;
+    }
+}
+
+/* Setter Injection */
+@Component
+public class School {
+    private Student student;
+
+    // Injected after the School object is instantiated
+    @Autowired
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+}
+
+
+Task 12:
+What is Spring Application Configuration?
+Application Configuration is the set of metadata, rules, and blueprints provided by the developer 
+to instruct the framework on how to build the application. It explicitly defines which Java classes 
+should be registered as managed components (Beans), sets their initial property values, and declares
+how they depend on one another. It can be written using XML files, Java classes (@Configuration), 
+or inline Annotations (@Component).
+
+Application Context is the active, runtime container engine (defined by the ApplicationContext 
+interface) that powers a Spring application. It reads the Application Configuration blueprints at 
+startup, instantiates the specified Java objects in memory, injects their dependencies, manages 
+their lifecycles, and serves them to the application. It acts as the central hub for all running 
+components and offers advanced ecosystem features like internationalisation, resource loading, and 
+event publishing.
+
+Difference b/w Application Configuration and Application Context?
+Application Configuration is the instruction manual that describes your objects, while the 
+Application Context is the living machine that reads that manual to build and run your application.
+
+-------------------------------------------------------
+Task 13:
+What are the different ways to configure spring applications?
+1. Annotation-Based Configuration (Declarative Style)
+-> @Component, @Service, @Repository, @Controller, @Autowired
+2. Java-Based Configuration (Programmatic Style)
+->Key Annotations: @Configuration, @Bean, @ComponentScan, @PropertySource
+3. XML-Based Configuration (Legacy Style)
+->Key Tags: <beans>, <bean>, <property>, <constructor-arg>
+--------------------------------------------
+
+Task 14: Why we need spring application copnfiguration?
+-> We need Spring Application Configuration because the Spring IoC container is inherently empty when 
+your application starts. Without configuration instructions, Spring has no way of knowing which Java
+classes exist, how to create them, or how they connect to each other.
+
+Task 15: What are the difference ways to configure spring application?
+Annotation Based Configuration: @Component, @Repository, @Service, @Controller, @Autowired
+Java Based Configuration: @Configuration, @Bean, @ComponentScan, @PropertySource
+XML Based Configuration: using tags <beans>, <bean>, <property> <constructor-arg>
+
+Task 16: What is bean scope .. give different scopes with description
+A Bean Scope defines the lifecycle and visibility of an object instance managed by the Spring IoC
+container. It controls exactly when a new instance of a bean is created, how long it lives in 
+memory, and who gets to share it.
+
+Threre are 6 scopes in Spring: Singleton, Prototype, Session, Request, WebSocket, Application
+
+Task 17: What is autowiring in spring?
+
+
+Task 18:
+What are diff ways of autowiring?
+10.19 to 10.21
+
+
+Task 19:
+What is diff between a normal java object and Spring bean?
+10.22 to 10.25 
+
+Task 20:
+What is diff between @Component and @Bean
+10.25 to 10.27
+
