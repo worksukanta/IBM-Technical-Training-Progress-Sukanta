@@ -1,23 +1,56 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://apache.org" xmlns:xsi="http://w3.org"
+  xsi:schemaLocation="http://apache.org http://apache.org">
   <modelVersion>4.0.0</modelVersion>
+  
   <groupId>com.school</groupId>
   <artifactId>SpringRevision</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>SpringRevision</name>
-  <url>http://maven.apache.org</url>
+  <url>http://apache.org</url>
+
+  <!-- 1. The Parent POM manages your Spring Boot ecosystem and versioning -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>4.1.0</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
+  <properties>
+    <!-- Spring Boot 4.1.0 requires a minimum of Java 17 up to Java 26 -->
+    <java.version>17</java.version> 
+  </properties>
+
   <dependencies>
+    <!-- 2. Core Spring Boot Web starter handles @RestController, @GetMapping, and Tomcat -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- 3. Modern Spring Boot testing framework (replaces old standalone junit 3.8) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>6.1.2</version>
-    </dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <scope>test</scope>
+  </dependency>
+
   </dependencies>
+
+  <build>
+    <plugins>
+      <!-- 4. Allows packaging your app into an executable fat JAR with 'mvn package' -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 </project>
