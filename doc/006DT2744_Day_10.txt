@@ -1,0 +1,126 @@
+Day 10- 29th July 2026
+
+
+Task 1: What is spring data JPA?
+Spring Data JPA is a framework within the Spring ecosystem that simplifies data access in Java 
+applications by providing an abstraction layer over the Java Persistence API (JPA).
+Instead of writing complex, repetitive SQL queries or manually managing database sessions, it 
+allows developers to interact with relational databases using standard Java objects through 
+Object-Relational Mapping (ORM).
+
+Task 2: What are the key features of Spring data JPA?
+Repository Abstraction: By extending interfaces like JpaRepository, Spring automatically generates 
+common database actions (saving, updating, deleting, and finding data) at runtime without any 
+custom implementation code.
+
+Derived Query Methods: You can define custom database searches simply by naming your interface 
+methods. For example, declaring List<User> findByLastNameAndAge(String name, int age) prompts 
+Spring to write the query for you automatically.
+
+Custom Queries: For highly complex logic, you can easily attach hand-written Java Persistence Query 
+Language (JPQL) or native SQL queries using @Query annotations.
+
+Built-in Pagination & Sorting: It handles sorting and chunking massive datasets natively via 
+specific method arguments (Pageable and Sort), reducing the manual math required for multi-page UI 
+views.
+---------------------------------
+Task 3: What are core components of Spring data JPA?
+1. The Repository Interfaces Hierarchy: under which we have, 
+CrudRepository: Provides basic Create, Read, Update, and Delete methods.
+PagingAndSortingRepository: Adds features for sorting data and fetching pages.
+JpaRepository: Combines both and adds JPA-specific features like batch deletion.
+
+2. Repository ProxyRuntime Implementation: 
+Spring automatically generates the actual class implementation for your repository interfaces at 
+startup using Java Dynamic Proxies.
+
+3. Query Creation Mechanisms
+Derived Queries: Generates database queries automatically from method names (e.g., findByEmail).
+@Query Annotation: Executes custom JPQL or native SQL queries mapped directly to a method.
+Specification API: Builds dynamic, reusable query filters using programmatic criteria.
+
+4. Infrastructure Support
+Auditing: Automatically populates timestamps and user tracking data (e.g., @CreatedDate).
+Bootstrap: Automated configuration (via @EnableJpaRepositories) that hooks your repositories into 
+the Spring lifecycle.
+
+Task 4:
+Now create a spring application using initializer
+Create a customer entity with id and account type
+10.23 to 10.26
+
+Task 5:
+Add this interface to your above code
+package com.example.demo;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
+}
+
+In the same project can you create CustomerController.java file..
+
+Now Test with Postman or curl:
+
+POST → http://localhost:8080/customers
+And also check 
+Check H2 console:
+
+URL: http://localhost:8080/h2-console
+
+
+Task 6:
+What is Application.proteries file is about?
+11.58 to 12.02
+
+Task 7:
+Why use application properties… uses?
+12.03 to 12.06
+
+Task 8:
+What is application.yml?
+12.07 to 12.10
+
+Task 9:
+Why use/prefer to use  application.yml instead of application.properties?
+12.11 to 12.13
+
+Task 10:
+What is Eureka Server?
+12.14 to 12.16
+
+Task 11:
+Purpose of Eureka Server.
+12.17 to 12.20
+
+
+Activity time:
+Pick any scenario – other than banking..
+
+Team 1
+Actuator Basics - Health & Metrics Overview (deep dive in Application Observability course)
+Team 2
+Spring Security - Quick Integration Overview (deep dive in Application Security course)
+Team 3
+Thymeleaf
+Team 4
+Caching Integration Basics (Spring Cache Abstraction - full depth in Redis & Caching course)
+
+
+By 2.30 will start with an Activity presentation..
+
+—----------------------------------------------------------------------------------------
+Home Task:
+
+Task 1:
+What do you know about Spring MVC framework?
+
+Task 2:
+What is Dispatcher Servlet?
+
+Task 3:
+Can you explain Spring MVC with diagram
+
+Task 4:
