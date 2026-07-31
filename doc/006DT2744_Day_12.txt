@@ -1,0 +1,1259 @@
+Day 12- 31th July 2026
+DBMS 
+
+Task 1:
+Why is there a  need for DBMS?
++----------------------------------------------------+
+|                  WHY NEED A DBMS?                  |
++----------------------------------------------------+
+|                                                    |
+|  * Redundancy: Minimizes duplicate data.           |
+|                                                    |
+|  * Consistency: Updates sync automatically.        |
+|                                                    |
+|  * Concurrency: Handles multi-user access safely.  |
+|                                                    |
+|  * Security: Enforces strict user permissions.     |
+|                                                    |
+|  * Recovery: Restores data after system crashes.   |
+|                                                    |
+|  * Speed: Uses indexing for rapid search.          |
+|                                                    |
++----------------------------------------------------+
+
+
+Task 2:
+Why not traditional File System?
++=============================================+
+
+|   LIMITATIONS OF TRADITIONAL FILE SYSTEMS   |
++=============================================+
+
+Traditional file systems fall short for modern
+big data and cloud applications due to three
+major limitations:
+1. Poor scalability for massive data sets.
+2. Lack of distributed processing support.
+3. Slow access speeds for unstructured data.
+
+KEY CONSTRAINTS:
+
+* Single Machine Limit
+  Hard to grow storage beyond one server.
+
+* No Built-In Distribution
+  Cannot split and process huge files
+  across many computers at the same time.
+
+* Weak Concurrency
+  Slow performance when many users or
+  programs write data simultaneously.
+
+* No Native Structure
+  Hard to search and analyze logs, video,
+  or sensor data without strict folders.
+
+
+Task 3:
+Explain the concept of data independence in DBMS. 
++==============================================================================+
+
+|                          DATA INDEPENDENCE IN DBMS                           |
++==============================================================================+
+
+Data independence allows you to modify the database schema at one level without 
+forcing a change to the schema at the next higher level. This insulation keeps 
+your frontend application code from breaking whenever the backend database structure 
+or storage mechanisms change.
+
+It is split into two distinct types based on the 3-schema architecture:
+
+1. LOGICAL DATA INDEPENDENCE
+* Modifies the conceptual schema (tables, columns, or relationships).
+* Does not require changes to the external schema (user views) or applications.
+* Example: Splitting an employee table or adding a new column to it will not 
+  disrupt existing application queries that do not use that new data.
+
+2. PHYSICAL DATA INDEPENDENCE
+* Modifies the physical storage structures (disks, file paths, or indexes).
+* Does not require changes to the conceptual tables or logical relationships.
+* Example: Upgrading storage hardware from HDD to SSD, moving database files 
+  to a new directory, or adding a B-Tree index requires zero application rewrites.
+
+
+Task 4:
+What are the different types of database models (hierarchical, network, relational, object-oriented)?
+Explain with examples
++==============================================================================+
+|                            DATABASE MODELS SUMMARY                           |
++==============================================================================+
+
+A database model determines the logical structure of a database. It defines 
+how data is stored, organized, and manipulated. 
+
+
+1. HIERARCHICAL MODEL (Tree Structure)
+--------------------------------------------------------------------------------
+* Concept: Data is organized like an upside-down tree. Each child record 
+  can have only one parent record, creating a 1-to-Many hierarchy.
+* Pros: Fast navigation for simple, naturally layered data.
+* Cons: Rigid and cannot handle Many-to-Many relationships.
+* Example: An organizational chart.
+  
+  [Company] ───> [Finance Department] ───> [Accountant]
+
+
+2. NETWORK MODEL (Graph Structure)
+--------------------------------------------------------------------------------
+* Concept: An extension of the hierarchical model. It allows child records 
+  to link to multiple parent records, creating a network graph.
+* Pros: Handles complex Many-to-Many relationships efficiently.
+* Cons: Highly complex to design and difficult to alter later.
+* Example: A university class registration system.
+  
+  [Student A]  ───┐   ┌───> [Course 1]
+                  X   X
+  [Student B]  ───┘   └───> [Course 2]
+
+
+3. RELATIONAL MODEL (Table Structure)
+--------------------------------------------------------------------------------
+* Concept: Data is stored in independent tables with rows and columns. 
+  Tables are dynamically connected to each other using shared keys.
+* Pros: Highly flexible, easy to query with SQL, and preserves integrity.
+* Cons: Struggles with deeply nested data or massive scalability.
+* Example: An e-commerce customer and order system.
+  
+  CUSTOMERS (CustomerID, Name, Email)
+     │
+     └─── (Linked via ID Key) ───> ORDERS (OrderID, CustomerID, Total)
+
+
+4. OBJECT-ORIENTED MODEL (Object Structure)
+--------------------------------------------------------------------------------
+* Concept: Integrates database storage directly with OOP languages. Data is 
+  stored as "objects" that contain both data values and functional code.
+* Pros: Perfect for complex multimedia, CAD systems, and geospatial data.
+* Cons: Steep learning curve and low compatibility with generic reporting tools.
+* Example: A vehicle rental application tracking class features.
+  
+  Class: Car { Make, Model, calculateRental() } ──> Object: [Tesla, M3]
+
++==============================================================================+
+
+Task 5: Describe concurrency control in DBMS. Why is it important?
++==============================================================================+
+|                         CONCURRENCY CONTROL IN DBMS                          |
++==============================================================================+
+
+Concurrency control is the process of managing simultaneous operations on a 
+database so that database integrity is not compromised. It ensures that concurrent 
+transactions execute safely without interfering with one another.
+
+WHY IS IT IMPORTANT?
+--------------------------------------------------------------------------------
+When multiple users update the database at the exact same time, it can cause 
+severe data corruption. Concurrency control prevents three major anomalies:
+
+1. Lost Update Problem
+* Occurs when two transactions read the same data, calculate updates, and write 
+  them back. The second write overwrites and destroys the first update.
+* Example: Two users book the last seat on a flight simultaneously. Both apps 
+  see it as available, charging both users but only assigning one seat.
+
+2. Dirty Read Problem
+* Occurs when a transaction reads data that has been modified by another 
+  transaction but not yet committed. If that transaction rolls back, the data 
+  read becomes invalid.
+* Example: An app reads an updated account balance of $500. The source transaction 
+  fails and reverts the balance back to $100. The app just processed a delivery 
+  based on fake, "dirty" money.
+
+3. Unrepeatable Read Problem
+* Occurs when a transaction reads the same row twice but gets different values 
+  because another transaction modified the data in between the reads.
+* Example: An inventory report reads a stock count of 10 items. A sale occurs 
+  immediately. The report re-reads the stock count 5 seconds later and finds only 
+  9 items, causing an internal calculation mismatch.
+
+
+HOW CONCURRENCY CONTROL SOLVES THIS (ACID Properties)
+--------------------------------------------------------------------------------
+Concurrency control guarantees the Isolation property of ACID by utilizing 
+different scheduling techniques:
+
+* Lock-Based Protocols: Prevents conflicts by locking data items. Transactions 
+  must request a Shared Lock (for reading) or an Exclusive Lock (for writing).
+* Timestamp-Based Protocols: Assigns a unique time marker to each transaction. 
+  Operations are ordered and executed strictly based on their creation time.
+* Optimistic Protocols: Assumes conflicts are rare. Transactions execute without 
+  locks, and the DBMS validates for conflicts right before committing changes.
++==============================================================================+
+
+
+Task 6: What are indexes in DBMS? How do they improve query performance?
++==============================================================================+
+|                             INDEXES IN DBMS                                  |
++==============================================================================+
+
+An index is a performance-tuning structure that speeds up data retrieval from a 
+database table. It acts like the index at the back of a textbook: instead of 
+reading every page to find a topic, you look it up in the index to find the 
+exact page number instantly.
+
+HOW INDEXES IMPROVE QUERY PERFORMANCE
+--------------------------------------------------------------------------------
+Without an index, the DBMS must perform a "Full Table Scan"—reading every row 
+from first to last to find matches. With an index, it performs an "Index Seek".
+
+1. Reduces Disk I/O (Input/Output)
+* Instead of scanning millions of raw rows on a slow disk, the DBMS queries a 
+  much smaller, highly organized index file to pinpoint locations.
+
+2. Achieves Logarithmic Search Time
+* Most indexes use B-Tree structures. This changes search complexity from Linear 
+  Time O(N) to Logarithmic Time O(log N). Finding a row among 1,000,000 items 
+  takes roughly 20 steps instead of 1,000,000 steps.
+
+3. Speeds Up Sorting and Grouping
+* Indexes store data in a pre-sorted order. Queries using ORDER BY, GROUP BY, 
+  or MIN/MAX execute instantly because the database does not need to sort data 
+  in memory during runtime.
+
+
+THE TRADE-OFF: THE COST OF INDEXES
+--------------------------------------------------------------------------------
+While indexes make data retrieval incredibly fast, they come with direct costs:
+
+* Write Overhead: Every INSERT, UPDATE, or DELETE operation becomes slower 
+  because the DBMS must modify both the table data and the index structures.
+* Disk Space: Indexes require additional storage. Large tables with multiple 
+  indexes can easily double the overall database size footprint.
+
+
+COMMON TYPES OF INDEXES
+--------------------------------------------------------------------------------
+* Clustered Index: Determines the physical order of data rows in the table. 
+  A table can have only one clustered index (usually the Primary Key).
+* Non-Clustered Index: A separate structure from the data rows. Contains copies 
+  of selected columns along with a pointer pointing to the actual data row.
++==============================================================================+
+
+
+Task 7: Explain deadlock in DBMS. What are the strategies for deadlock prevention and detection?
++==============================================================================+
+|                             DEADLOCK IN DBMS                                 |
++==============================================================================+
+
+A deadlock is a situation where two or more transactions are permanently blocked 
+because each is waiting for a resource that is locked by the other. It creates 
+a circular dependency loop where no transaction can make forward progress.
+
+THE DEADLOCK PROBLEM (Example Scenario)
+--------------------------------------------------------------------------------
+1. Transaction A locks Row 1 and requests a lock on Row 2.
+2. Transaction B locks Row 2 and requests a lock on Row 1.
+3. Both transactions are now frozen forever, waiting for each other to finish.
+
+                 Has Lock                      Wants Lock
+   [Transaction A] ────> (Row 1 Data Resource) ────┐
+          ▲                                        │
+          │ Wants Lock                             ▼ Has Lock
+          └─────────── (Row 2 Data Resource) <──── [Transaction B]
+
+
+STRATEGIES FOR MANAGING DEADLOCKS
+--------------------------------------------------------------------------------
+
+1. DEADLOCK PREVENTION (Proactive Approach)
+The DBMS checks transactions before granting locks to ensure a deadlock cannot 
+physically occur. This uses transaction timestamps (older vs. younger):
+
+* Wait-Die Scheme: An older transaction is allowed to wait for a younger one. 
+  If a younger transaction requests a resource held by an older one, the 
+  younger transaction dies (rolls back).
+* Wound-Wait Scheme: An older transaction wounds (preempts/rolls back) a 
+  younger transaction to take its resource. If a younger transaction requests a 
+  resource held by an older one, the younger transaction is allowed to wait.
+* No-Wait Rule: If a transaction cannot get a lock instantly, it is aborted 
+  and restarted immediately rather than waiting.
+
+2. DEADLOCK DETECTION & RECOVERY (Reactive Approach)
+The DBMS allows deadlocks to happen, actively searches for them, and fixes them.
+
+* Wait-For Graph (WFG): The system creates a directed graph where nodes are 
+  transactions and edges represent resource waits. If a background thread 
+  detects a closed loop/cycle in this graph, a deadlock exists.
+* Recovery (Victim Selection): Once a cycle is found, the DBMS chooses one 
+  transaction as a "victim", rolls it back, releases its locks so other apps 
+  can finish, and restarts it later.
++==============================================================================+
+
+
+RDBMS:
+
+Task 8: What do you understand by Relational model?
++==============================================================================+
+|                          THE RELATIONAL MODEL IN DBMS                        |
++==============================================================================+
+
+The Relational Model organizes data into mathematically defined relations, which 
+manifest as two-dimensional tables consisting of rows and columns. Introduced by 
+Edgar F. Codd in 1970, it abstracts data away from its physical storage, allowing 
+users to query data based on its logical relationships.
+
+
+CORE COMPONENTS
+--------------------------------------------------------------------------------
+* Relation (Table): A named structure containing rows and columns.
+* Tuple (Row/Record): A single entry or factual occurrence within a table.
+* Attribute (Column/Field): A distinct data property or characteristic.
+* Domain: The set of allowable, atomic values for a given attribute.
+
+
+KEY CONSTRAINTS & INTEGRITY RULES
+--------------------------------------------------------------------------------
+To ensure accuracy and prevent data corruption, the relational model enforces 
+four critical boundaries:
+
+1. Entity Integrity
+* Every table must have a designated Primary Key column.
+* The Primary Key values must be completely unique and cannot contain NULL values.
+
+2. Referential Integrity
+* Enforced via Foreign Keys (a column pointing to a Primary Key in another table).
+* Ensures that a relationship between two tables remains valid and synchronized.
+* Prevents orphan records (e.g., placing an order for a Customer ID that does 
+  not actually exist).
+
+3. Domain Integrity
+* Restricts values in a column to a specific data type, range, or format.
+* Example: An 'Age' column rejecting text strings like "twenty" or values like -5.
+
+
+LOGICAL MAP EXAMPLE
+--------------------------------------------------------------------------------
+
+  CUSTOMERS Table                       ORDERS Table
+  +----+--------+                     +---------+-------------+-------+
+
+  | ID | Name   |                     | OrderID | Customer_ID | Total |
+  +----+--------+                     +---------+-------------+-------+
+
+  | 01 | Alice  | <─── (Linked via) ───| 9901    | 01          | 54.00 |
+  | 02 | Bob    |                      | 9902    | 01          | 12.50 |
+  +----+--------+                     +---------+-------------+-------+
+   Primary Key                         Foreign Key Links to ID
++==============================================================================+
+
+
+Task 9: Specify key terms that you encounter in RDBMS. Give brief explanation
+
+
+Task 10:
+What are different types of keys in RDBMS?
+Explain using diagrams .. 
++==============================================================================+
+|                            TYPES OF KEYS IN RDBMS                            |
++==============================================================================+
+
+A key is an attribute or set of attributes used to identify, relate, and uniquely 
+distinguish a row (record) within a table.
+
+
+REFINED KEY CONCEPTS & DEFINITIONS
+--------------------------------------------------------------------------------
+* Single Key: A key containing exactly one attribute.
+* Composite Key: A key made of two or more attributes combined together.
+* Super Key: Any set of one or more attributes that can uniquely identify a row. 
+  Adding extra, unnecessary columns to a valid key still leaves it a Super Key.
+* Candidate Key: A minimal Super Key. It uniquely identifies rows without any 
+  unnecessary or redundant attributes.
+* Primary Key: The specific Candidate Key chosen by the architect to uniquely 
+  identify rows. It automatically enforces unique and NOT NULL properties.
+* Alternate Key: Any Candidate Key that was not chosen as the Primary Key.
+* Foreign Key: An attribute in a table that links to a Primary Key in another 
+  table to establish a logical relationship.
+
+
+KEY HIERARCHY DIAGRAM
+--------------------------------------------------------------------------------
+This Venn diagram illustrates how keys nest within each other. All Candidate 
+Keys are Super Keys, and your Primary Key is just one chosen Candidate Key.
+
+  +------------------------------------------------------------------------+
+
+  | SUPER KEYS                                                             |
+  | (Any unique combinations: {ID}, {ID, Name}, {Email}, {Email, Status})  |
+  |                                                                        |
+  |   +----------------------------------------------------------------+   |
+  |   | CANDIDATE KEYS (Minimal unique sets: {ID}, {Email})            |   |
+  |   |                                                                |   |
+  |   |   +-----------------------+        +-----------------------+   |   |
+  |   |   | PRIMARY KEY           |        | ALTERNATE KEY         |   |   |
+  |   |   |                       |        |                       |   |   |
+  |   |   |  {ID}                 |        |  {Email}              |   |   |
+  |   |   +-----------------------+        +-----------------------+   |   |
+  |   +----------------------------------------------------------------+   |
+  +------------------------------------------------------------------------+
+
+
+PRACTICAL TABLE RELATIONSHIP DIAGRAM
+--------------------------------------------------------------------------------
+Let's look at an Employee table linking to a Department table to see how single, 
+composite, primary, and foreign keys operate in practice.
+
+  EMPLOYEES TABLE
+  +--------+--------+---------------+------------+---------+
+
+  | Emp_ID | Email  | Biometric_Ref | Work_Shift | Dept_ID |
+  +--------+--------+---------------+------------+---------+
+
+  | 101    | a@b.com| BIO-992A      | Morning    | D50     |
+  | 102    | c@d.com| BIO-441X      | Evening    | D50     |
+  +--------+--------+---------------+------------+---------+
+     │        │       └──────┬──────┘     └────┬───┘     │
+     │        │              └────────┬────────┘         ▼
+     │        │                       │            FOREIGN KEY ──┐
+     │        │                       ▼            (Points to    │
+     │        │                 COMPOSITE KEY       Dept_ID)     │
+     │        │       {Biometric_Ref, Work_Shift}                │
+     │        ▼                                                  │
+     │    CANDIDATE KEY / ALTERNATE KEY                          │
+     ▼                                                           │
+  PRIMARY KEY (Single Attribute)                                 │
+                                                                 │
+                                                                 │
+  DEPARTMENTS TABLE <────────────────────────────────────────────┘
+  +---------+-----------------+
+
+  | Dept_ID | Dept_Name       |
+  +---------+-----------------+
+
+  | D50     | Engineering     |
+  +---------+-----------------+
+   Primary Key
++==============================================================================+
+
+Task 11:
+As you know diff keys in RDBMS what is the difference between primary key, foreign key, and unique 
+key?
++==============================================================================+
+|               DIFFERENCE BETWEEN PRIMARY, UNIQUE, AND FOREIGN KEYS           |
++==============================================================================+
+
+While all three structures enforce data integrity across tables, they serve 
+completely different operational purposes in a Relational Database:
+
+1. STRUCTURAL CHARACTERISTICS
+--------------------------------------------------------------------------------
+* PRIMARY KEY (PK)
+  - Purpose: Uniquely identifies each row/record within a single table.
+  - Limit: A table can have exactly ONE Primary Key.
+  - Nullability: Completely rejects NULL values. Every cell must have valid data.
+
+* UNIQUE KEY (UK)
+  - Purpose: Ensures that data within a specific column (or columns) is unique.
+  - Limit: A table can have MULTIPLE Unique Keys (e.g., UK_Email, UK_Phone).
+  - Nullability: Accepts NULL values (usually one or multiple depending on DBMS).
+
+* FOREIGN KEY (FK)
+  - Purpose: Establishes a link or relationship between two different tables.
+  - Limit: A table can have MULTIPLE Foreign Keys linking to different destinations.
+  - Nullability: Fully accepts duplicate and NULL values (unless restricted).
+
+
+2. QUICK COMPARISON MATRIX
+--------------------------------------------------------------------------------
+Feature          | Primary Key        | Unique Key         | Foreign Key
+-----------------+--------------------+--------------------+--------------------
+Core Purpose     | Identify a row     | Prevent duplicates | Link two tables
+Max Per Table    | Exactly One        | Unrestricted       | Unrestricted
+Allows NULLs?    | Strictly No        | Yes                | Yes
+Creates Index?   | Yes (Clustered)    | Yes (Non-Clustered)| No (Manually added)
+
+
+3. VISUAL IMPLEMENTATION DIAGRAM
+--------------------------------------------------------------------------------
+Let's see how all three keys interact in a real database table layout:
+
+  USERS TABLE
+  +---------+------------------+----------------+------------+
+
+  | User_ID | Email            | Alternative_Id | Company_ID |
+  +---------+------------------+----------------+------------+
+
+  | 1001    | alpha@corp.com   | AL-99          | C20        |
+  | 1002    | beta@corp.com    | NULL           | C20        |  <-- Duplicate FK
+  +---------+------------------+----------------+------------+      is allowed
+       │             │                │               │
+       ▼             ▼                ▼               ▼
+  PRIMARY KEY    UNIQUE KEY       UNIQUE KEY     FOREIGN KEY
+  (Only 1,       (No duplicates,  (Accepts NULL  (Links to the 
+   No NULLs)      No NULLs here)   values)        COMPANIES table)
+                                                      │
+  COMPANIES TABLE <───────────────────────────────────┘
+  +------------+---------------+
+
+  | Company_ID | Company_Name  |
+  +------------+---------------+
+
+  | C20        | Tech Corp     |
+  +------------+---------------+
+   Primary Key
++==============================================================================+
+
+
+Task 12:
+How does transaction management work in DBMS? Give an example of commit and rollback .
++==============================================================================+
+|                        TRANSACTION MANAGEMENT IN DBMS                        |
++==============================================================================+
+
+A transaction is a single logical unit of database processing that takes a 
+database from one consistent state to another. Transaction management is the 
+mechanism that ensures all operations within that unit execute successfully 
+as a single block, or none of them execute at all.
+
+
+THE GOLD STANDARD: ACID PROPERTIES
+--------------------------------------------------------------------------------
+To manage transactions safely, the DBMS must guarantee four core principles:
+
+* Atomicity: "All or nothing." If any part fails, the entire transaction drops.
+* Consistency: Data moves from one valid, rule-abiding state to another.
+* Isolation: Concurrent transactions execute without bleeding into each other.
+* Durability: Once committed, updates survive even during a sudden power crash.
+
+
+THE TWO CORE OPERATIONS
+--------------------------------------------------------------------------------
+* COMMIT: Saves all modifications permanently to disk storage and releases locks.
+* ROLLBACK: Reverts the data back to its original state before the transaction 
+  started, erasing any uncommitted changes if an error occurs.
+
+
+REAL-WORLD WORKING EXAMPLE: BANK ACCOUNT TRANSFER
+--------------------------------------------------------------------------------
+Scenario: Account A ($500 balance) wants to transfer $100 to Account B ($200 balance).
+
+  Initial Database State:
+  Account_A = $500, Account_B = $200
+
+  The Transaction Block:
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │ START TRANSACTION;                                                     │
+  │ STEP 1: Deduct $100 from Account_A. (New temporary balance: $400)      │
+  │ STEP 2: Add $100 to Account_B.    (New temporary balance: $300)      │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  Case 1: The Transaction Succeeds (COMMIT Path)
+  * Step 1 succeeds, Step 2 succeeds.
+  * System runs: COMMIT;
+  * Result: Changes are written to disk permanently.
+  * Final State: Account_A = $400, Account_B = $300.
+
+  Case 2: The Network Fails Mid-Way (ROLLBACK Path)
+  * Step 1 succeeds (Account_A becomes $400).
+  * System crashes or network drops *before* Step 2 can execute.
+  * System runs: ROLLBACK;
+  * Result: Step 1 changes are undone. Account_A goes back to $500.
+  * Final State: Account_A = $500, Account_B = $200 (No money vanished).
+
+
+VISUAL STATE TRANSITION DIAGRAM
+--------------------------------------------------------------------------------
+
+                [ Active Transaction State ]
+                 /                        \
+      (All steps succeed)            (Any step fails / crash)
+               /                            \
+              ▼                              ▼
+      [ Partially Committed ]           [ Failed State ]
+              │                              │
+        (Run COMMIT)                   (Run ROLLBACK)
+              │                              │
+              ▼                              ▼
+     [ COMMITTED STATE ]            [ ABORTED STATE ]
+   (Changes Permanent)             (Data Reverted to Old State)
++==============================================================================+
+
+Task 13:
+What is normalization? Why is it necessary in database design?
++==============================================================================+
+|                          NORMALIZATION IN DBMS                               |
++==============================================================================+
+
+Normalization is a systematic process of organizing a relational database to 
+minimize data redundancy and eliminate undesirable characteristics like Insertion, 
+Update, and Deletion Anomalies. It involves dividing large, messy tables into 
+smaller, well-structured tables and defining relationships between them.
+
+
+WHY IS IT NECESSARY? (THE PROBLEM OF UN-NORMALIZED DATA)
+--------------------------------------------------------------------------------
+Without normalization, a database stores duplicate information across multiple rows. 
+This structural flaw creates three dangerous anomalies:
+
+1. Insertion Anomaly
+* Problem: You cannot insert certain data because it requires other data that 
+  does not exist yet.
+* Example: You cannot add a new `Department` to a company database until you hire 
+  at least one `Employee` to sit in that department, because both are smashed into 
+  the same table.
+
+2. Update Anomaly
+* Problem: Changing a single data value forces you to update multiple rows. If 
+  you miss even one row, the database becomes inconsistent.
+* Example: If a manager changes their phone number, you have to find and rewrite 
+  that number for all 50 employees working under them.
+
+3. Deletion Anomaly
+* Problem: Deleting a record unintentionally destroys unrelated, critical data.
+* Example: If you fire the only employee working in the "Research" department, 
+  deleting their row completely erases the department's existence from your system.
+
+
+THE BENEFITS OF A NORMALIZED DATABASE
+--------------------------------------------------------------------------------
+* Data Integrity: Ensures data is stored in exactly one place, making updates 
+  clean, fast, and 100% accurate.
+* Storage Optimization: Eliminates massive amounts of redundant text and values, 
+  drastically shrinking the overall disk footprint.
+* Cleaner Queries: Simplifies data maintenance because you do not have to scan 
+  multiple duplicate rows to guarantee an accurate update.
+
+
+VISUAL REDESIGN MECHANISM (Example Concept)
+--------------------------------------------------------------------------------
+
+  UN-NORMALIZED BLOB TABLE (Bad: Redundant manager data everywhere)
+  +--------+---------------+--------------+-------------------+
+
+  | Emp_ID | Emp_Name      | Dept_Name    | Dept_Manager      |
+  +--------+---------------+--------------+-------------------+
+
+  | 101    | Alice         | Engineering  | John Doe          |
+  | 102    | Bob           | Engineering  | John Doe          | <-- Redundant
+  +--------+---------------+--------------+-------------------+
+
+
+  NORMALIZED SCHEMA (Good: Split into clean, distinct relations)
+  
+  EMPLOYEES TABLE                       DEPARTMENTS TABLE
+  +--------+--------+---------+         +---------+-------------+--------------+
+
+  | Emp_ID | Name   | Dept_ID |         | Dept_ID | Dept_Name   | Dept_Manager |
+  +--------+--------+---------+         +---------+-------------+--------------+
+
+  | 101    | Alice  | D01     | ──┐     | D01     | Engineering | John Doe     |
+  | 102    | Bob    | D01     | ──┼─────┘                                      |
+  +--------+--------+---------+   └──> Linked via Foreign Key                  |
+                                       Updates happen in exactly ONE spot!     |
++==============================================================================+
+
+
+Task 14:
+What do you understand by 1nf? Explain with an example
++==============================================================================+
+|                    FIRST NORMAL FORM (1NF) IN DBMS                           |
++==============================================================================+
+
+First Normal Form (1NF) is the foundational step in database normalization. 
+A table is considered to be in 1NF if and only if it meets four strict rules:
+
+1. Atomic Values: Every column must contain only single, indivisible values. 
+   No arrays, lists, or comma-separated values are allowed within a single cell.
+2. Unique Rows: Each row must be completely unique, which requires defining a 
+   clear Primary Key or Composite Key.
+3. Single Domain: All entries in a column must share the exact same data type.
+4. Order Independence: The order of rows or columns must not affect the meaning 
+   or accessibility of the data.
+
+
+REAL-WORLD WORKING EXAMPLE
+--------------------------------------------------------------------------------
+Scenario: A company tracks employee data along with the office locations they 
+manage.
+
+
+  VIOLATING 1NF (The Problem Table)
+  This table breaks 1NF rules because the 'Offices' cell contains a comma-
+  separated list of multiple values instead of a single atomic value.
+
+  +--------+----------+--------------------------+
+
+  | Emp_ID | Emp_Name | Offices                  |
+  +--------+----------+--------------------------+
+
+  | 101    | Alice    | New York, London, Paris  | <-- Non-atomic list
+  | 102    | Bob      | Tokyo                    |
+  +--------+----------+--------------------------+
+  * Query Problem: It is extremely difficult to write an efficient SQL query 
+    to search for employees who manage just 'London'.
+
+
+  CONVERTED TO 1NF (The Normalized Solution)
+  To bring this table into 1NF, we split the composite, repeating values 
+  so that every cell contains exactly one atomic value.
+
+  +--------+----------+----------------+
+  | Emp_ID | Emp_Name | Office         |
+  +--------+----------+----------------+
+  | 101    | Alice    | New York       |
+  | 101    | Alice    | London         |
+  | 101    | Alice    | Paris          |
+  | 102    | Bob      | Tokyo          |
+  +--------+----------+----------------+
+  * Primary Key: Because Emp_ID now repeats, a single column cannot identify the 
+    rows. We must use a Composite Key consisting of {Emp_ID, Office}.
+
+
+PROS AND CONS OF 1NF
+--------------------------------------------------------------------------------
+* Pros: Eliminates nested structural data, simplifies basic search conditions, 
+  and allows standard relational queries to execute properly.
+* Cons: It introduces a large amount of redundant text (e.g., repeating 
+  'Alice' three times). This creates data redundancy that must be cleaned 
+  up in the next stage (Second Normal Form).
++==============================================================================+
+
+
+Task 15:
+What do you understand by 2NF? Explain with an example.
++==============================================================================+
+|                   SECOND NORMAL FORM (2NF) IN DBMS                           |
++==============================================================================+
+Second Normal Form (2NF) aims to eliminate redundancy by separating unrelated 
+data into distinct tables. A table is in 2NF if and only if:
+
+1. It is already in First Normal Form (1NF).
+2. It has NO partial dependencies. This means every non-prime attribute (a column 
+   that is not part of any candidate key) must be fully dependent on the entire 
+   Primary Key, not just a subset of it.
+
+Note: If a 1NF table has a single-column Primary Key, it is automatically in 2NF. 
+Partial dependencies can only occur when using a Composite Primary Key.
+
+
+REAL-WORLD WORKING EXAMPLE
+--------------------------------------------------------------------------------
+Scenario: We will use the final 1NF table from the previous step, which tracks 
+employees, their names, and the specific offices they manage.
+
+* Composite Primary Key: {Emp_ID, Office}
+* Non-Prime Attribute: Emp_Name
+
+
+  VIOLATING 2NF (The 1NF Table)
+  This table breaks 2NF rules because 'Emp_Name' depends entirely on 'Emp_ID'. 
+  It has absolutely no relationship with 'Office'. This is a Partial Dependency.
+
+  +--------+----------+----------------+
+  | Emp_ID | Emp_Name | Office         |
+  +--------+----------+----------------+
+  | 101    | Alice    | New York       |
+  | 101    | Alice    | London         | <-- Redundant data entry
+  | 101    | Alice    | Paris          | <-- Redundant data entry
+  | 102    | Bob      | Tokyo          |
+  +--------+----------+----------------+
+  * Redundancy Problem: If Alice manages 100 offices, her name is written 100 times. 
+    If she updates her name, you must execute 100 separate updates (Update Anomaly).
+
+
+  CONVERTED TO 2NF (The Normalized Solution)
+  To resolve partial dependency, we decompose the table into two separate tables 
+  by isolating the attributes responsible for the conflict.
+
+  TABLE 1: EMPLOYEES (Tracks employee core metadata)
+  +--------+----------+
+  | Emp_ID | Emp_Name |
+  +--------+----------+
+  | 101    | Alice    |
+  | 102    | Bob      |
+  +--------+----------+
+  * Primary Key: {Emp_ID} (Single Attribute, zero partial dependencies)
+
+  TABLE 2: EMPLOYEE_OFFICES (Tracks assignments)
+  +--------+----------------+
+  | Emp_ID | Office         |
+  +--------+----------------+
+  | 101    | New York       |
+  | 101    | London         |
+  | 101    | Paris          |
+  | 102    | Tokyo          |
+  +--------+----------------+
+  * Composite Primary Key: {Emp_ID, Office}
+  * Foreign Key: Emp_ID links back to the EMPLOYEES table.
++==============================================================================+
+
+
+Task 16:
+What do you understand by 3 nf ? Explain with an example
++==============================================================================+
+|                    THIRD NORMAL FORM (3NF) IN DBMS                           |
++==============================================================================+
+Third Normal Form (3NF) focuses on removing transitive dependencies. A database 
+table is in 3NF if and only if:
+
+1. It is already in Second Normal Form (2NF).
+2. It has NO transitive dependencies. This means non-prime attributes must not 
+   depend on other non-prime attributes. Every non-prime attribute must depend 
+   ONLY on the primary key, the whole primary key, and nothing but the primary key.
+
+
+REAL-WORLD WORKING EXAMPLE
+--------------------------------------------------------------------------------
+Scenario: A company tracks employee records along with department specifics.
+
+* Primary Key: {Emp_ID}
+* Non-Prime Attributes: Emp_Name, Dept_ID, Dept_Name
+
+
+  VIOLATING 3NF (The 2NF Table)
+  Since 'Emp_ID' is a single-column primary key, this table is natively in 2NF. 
+  However, it breaks 3NF rules because 'Dept_Name' is determined by 'Dept_ID' 
+  (another non-prime attribute). This is a Transitive Dependency: 
+  Emp_ID ───> Dept_ID ───> Dept_Name
+
+  +--------+----------+---------+-----------------+
+  | Emp_ID | Emp_Name | Dept_ID | Dept_Name       |
+  +--------+----------+---------+-----------------+
+  | 101    | Alice    | D50     | Engineering     |
+  | 102    | Bob      | D50     | Engineering     | <-- Redundant data entry
+  | 103    | Charlie  | D60     | Marketing       |
+  +--------+----------+---------+-----------------+
+  * Deletion Anomaly: If Charlie quits and you delete his row, you completely 
+    erase the "Marketing" department name from your system database.
+
+
+  CONVERTED TO 3NF (The Normalized Solution)
+  To resolve transitive dependencies, we split the table into two separate 
+  logical tables, completely decoupling the departments from the employees.
+
+  TABLE 1: EMPLOYEES (Tracks employee core metadata)
+  +--------+----------+---------+
+  | Emp_ID | Emp_Name | Dept_ID |
+  +--------+----------+---------+
+  | 101    | Alice    | D50     |
+  | 102    | Bob      | D50     |
+  | 103    | Charlie  | D60     |
+  +--------+----------+---------+
+  * Primary Key: {Emp_ID}
+  * Foreign Key: Dept_ID links to the DEPARTMENTS table.
+
+  TABLE 2: DEPARTMENTS (Tracks department names in exactly ONE place)
+  +---------+-----------------+
+  | Dept_ID | Dept_Name       |
+  +---------+-----------------+
+  | D50     | Engineering     |
+  | D60     | Marketing       |
+  +---------+-----------------+
+  * Primary Key: {Dept_ID}
++==============================================================================+
+
+Task: Home
+What is BCNF? explain with example.
++==============================================================================+
+
+|                    BOYCE-CODD NORMAL FORM (BCNF) IN DBMS                     |
++==============================================================================+
+Boyce-Codd Normal Form (BCNF) is an advanced, stricter extension of Third Normal 
+Form (3NF), often referred to as 3.5NF. A table is in BCNF if and only if:
+
+1. It is already in Third Normal Form (3NF).
+2. For every non-trivial functional dependency (X ───> Y), X must be a Super Key. 
+   Simply put: a table is in BCNF if data can only be determined by a candidate key, 
+   with absolutely no anomalies caused by overlapping composite candidate keys.
+
+
+REAL-WORLD WORKING EXAMPLE
+--------------------------------------------------------------------------------
+Scenario: A college database tracks student course enrollments and professors. 
+* Business Rules: A student can take multiple courses. Each professor teaches 
+  only ONE course. A course can have multiple professors.
+* Candidate Keys: {Student_ID, Course}  AND  {Student_ID, Professor}
+* Determinants: {Student_ID, Course} ──> Professor  AND  Professor ──> Course
+
+
+  VIOLATING BCNF (But fully valid in 3NF)
+  This table is in 3NF because there are no partial or transitive dependencies 
+  among non-prime attributes. However, it breaks BCNF because of the rule 
+  'Professor ──> Course'. The attribute 'Professor' is a determinant, but it is 
+  NOT a Super Key on its own.
+
+  +------------+---------------+-----------------+
+
+  | Student_ID | Course        | Professor       |
+  +------------+---------------+-----------------+
+
+  | 5001       | Database      | Dr. Alan Turing |
+  | 5002       | Database      | Dr. Alan Turing | <-- Redundant Course entry
+  | 5001       | AI            | Dr. Grace Hopper|
+  +------------+---------------+-----------------+
+  * Update Anomaly: If Dr. Alan Turing changes his course to "Data Structures", 
+    you must modify multiple rows. If you miss one, your database becomes broken.
+
+
+  CONVERTED TO BCNF (The Normalized Solution)
+  To resolve this anomaly, we split the mapping so that the determinant column 
+  (Professor) becomes the Primary Key of its own dedicated table.
+
+  TABLE 1: PROFESSOR_COURSES (Maps professors to their unique course)
+  +------------------+-----------------+
+
+  | Professor        | Course          |
+  +------------------+-----------------+
+
+  | Dr. Alan Turing  | Database        |
+  | Dr. Grace Hopper | AI              |
+  +------------------+-----------------+
+  * Primary Key: {Professor} (Now a Super Key, fulfilling BCNF criteria)
+
+  TABLE 2: STUDENT_ENROLLMENTS (Tracks which student sits with which professor)
+  +------------+------------------+
+
+  | Student_ID | Professor        |
+  +------------+------------------+
+
+  | 5001       | Dr. Alan Turing  |
+  | 5002       | Dr. Alan Turing  |
+  | 5001       | Dr. Grace Hopper |
+  +------------+------------------+
+  * Composite Primary Key: {Student_ID, Professor}
+  * Foreign Key: Professor links back to the PROFESSOR_COURSES table.
++==============================================================================+
+
+
+Task Home:
+Give an example of not normalized table, which is not following any normal form upto bcnf.
+Then normalize the table step by step, converting it one by one into 1NF then 2NF, then 3NF and
+finally BCNF.
++==============================================================================+
+
+|                 STEP-BY-STEP COMPLETE NORMALIZATION ENGINE                   |
++==============================================================================+
+
+To show the entire process, we will start with a completely un-normalized (UNF) 
+university registration spreadsheet. We will track students, their advisor, the 
+department details, and the courses they are taking under those advisors.
+
+BUSINESS RULES FOR THIS DATABASE:
+1. An advisor belongs to exactly one department.
+2. A department has exactly one main office location.
+3. An advisor teaches exactly one course. 
+4. A course can have multiple advisors, but each advisor only handles one course.
+5. A student can enroll in multiple courses.
+
+
+================================================================================
+STEP 0: THE UN-NORMALIZED TABLE (UNF) - Violates 1NF, 2NF, 3NF, BCNF
+================================================================================
+This table breaks 1NF because the 'Courses', 'Advisors', and 'Dept' fields 
+contain non-atomic, comma-separated lists of values inside single cells.
+
+  +--------+-------+--------------------+-------------------+-----------------+
+
+  | StudID | Name  | Courses            | Advisors          | Dept (Office)   |
+  +--------+-------+--------------------+-------------------+-----------------+
+
+  | 801    | Liam  | Database, Security | Turing, Lovelace  | CS (Room 10),   |
+  |        |       |                    |                   | Cyber (Room 12) |
+  | 802    | Mia   | Database           | Turing            | CS (Room 10)    |
+  +--------+-------+--------------------+-------------------+-----------------+
+
+
+================================================================================
+STEP 1: CONVERTING TO FIRST NORMAL FORM (1NF)
+================================================================================
+Rule: Flatten all cells so every row/column intersection contains exactly one 
+atomic (indivisible) value. 
+
+  1NF STUDENT_REGISTRATION TABLE
+  +--------+-------+------------+----------+---------+-------------+
+
+  | StudID | Name  | Course     | Advisor  | DeptID  | Dept_Office |
+  +--------+-------+------------+----------+---------+-------------+
+
+  | 801    | Liam  | Database   | Turing   | CS      | Room 10     |
+  | 801    | Liam  | Security   | Lovelace | Cyber   | Room 12     |
+  | 802    | Mia   | Database   | Turing   | CS      | Room 10     |
+  +--------+-------+------------+----------+---------+-------------+
+  * Primary Key: Composite Key {StudID, Advisor}
+  * Remaining Anomalies: This table violates 2NF because 'Name' depends only on 
+    'StudID' (a partial subset of our composite primary key).
+
+
+================================================================================
+STEP 2: CONVERTING TO SECOND NORMAL FORM (2NF)
+================================================================================
+Rule: Must be in 1NF, and must eliminate all partial dependencies. Non-key columns 
+must depend on the entire composite primary key, not a single piece of it.
+
+We split the 1NF table into two separate tables:
+
+  TABLE 2A: STUDENTS (Isolates student attributes)
+  +--------+-------+
+
+  | StudID | Name  |
+  +--------+-------+
+
+  | 801    | Liam  |
+  | 802    | Mia   |
+  +--------+-------+
+  * Primary Key: {StudID} (Single column primary key = auto-compliant with 2NF)
+
+  TABLE 2B: REGISTRATIONS (Isolates the composite system)
+  +--------+----------+------------+---------+-------------+
+
+  | StudID | Advisor  | Course     | DeptID  | Dept_Office |
+  +--------+----------+------------+---------+-------------+
+
+  | 801    | Turing   | Database   | CS      | Room 10     |
+  | 801    | Lovelace | Security   | Cyber   | Room 12     |
+  | 802    | Turing   | Database   | CS      | Room 10     |
+  +--------+----------+------------+---------+-------------+
+  * Primary Key: Composite Key {StudID, Advisor}
+  * Remaining Anomalies: This table violates 3NF because of a transitive 
+    dependency. Advisor ──> DeptID ──> Dept_Office. 'Dept_Office' depends on 
+    'DeptID', which is a non-prime attribute.
+
+
+================================================================================
+STEP 3: CONVERTING TO THIRD NORMAL FORM (3NF)
+================================================================================
+Rule: Must be in 2NF, and must eliminate transitive dependencies. Non-prime 
+columns cannot rely on other non-prime columns. 
+
+We break Table 2B down further to isolate the department office mapping:
+
+  TABLE 3A: STUDENTS (Carried over from 2NF)
+  +--------+-------+
+
+  | StudID | Name  |
+  +--------+-------+
+
+  | 801    | Liam  |
+  | 802    | Mia   |
+  +--------+-------+
+  * Primary Key: {StudID}
+
+  TABLE 3B: DEPARTMENTS (Isolates department meta)
+  +---------+-------------+
+
+  | DeptID  | Dept_Office |
+  +---------+-------------+
+
+  | CS      | Room 10     |
+  | Cyber   | Room 12     |
+  +---------+-------------+
+  * Primary Key: {DeptID}
+
+  TABLE 3C: STUDENT_ADVISORS (Maps students to advisors and courses)
+  +--------+----------+------------+---------+
+
+  | StudID | Advisor  | Course     | DeptID  |
+  +--------+----------+------------+---------+
+
+  | 801    | Turing   | Database   | CS      |
+  | 801    | Lovelace | Security   | Cyber   |
+  | 802    | Turing   | Database   | CS      |
+  +--------+----------+------------+---------+
+  * Primary Key: Composite Key {StudID, Advisor}
+  * Remaining Anomalies: This table breaks BCNF. Look at the dependencies here:
+    1. {StudID, Advisor} ──> Course, DeptID
+    2. Advisor ──> Course (Because an advisor only teaches one specific course)
+    In dependency #2, 'Advisor' determines 'Course', but 'Advisor' is NOT a 
+    Super Key. This overlapping key relationship violates BCNF.
+
+
+================================================================================
+STEP 4: CONVERTING TO BOYCE-CODD NORMAL FORM (BCNF)
+================================================================================
+Rule: Must be in 3NF. For every functional dependency X ──> Y, X must be a 
+Super Key. If an attribute determines something, that attribute has to be a key.
+
+To fix Table 3C, we extract the 'Advisor ──> Course, DeptID' relationship into 
+its own independent entity where 'Advisor' becomes the absolute Primary Key.
+
+  TABLE 4A: STUDENTS
+  +--------+-------+
+
+  | StudID | Name  |
+  +--------+-------+
+
+  | 801    | Liam  |
+  | 802    | Mia   |
+  +--------+-------+
+  * Primary Key: {StudID}
+
+  TABLE 4B: DEPARTMENTS
+  +---------+-------------+
+
+  | DeptID  | Dept_Office |
+  +---------+-------------+
+
+  | CS      | Room 10     |
+  | Cyber   | Room 12     |
+  +---------+-------------+
+  * Primary Key: {DeptID}
+
+  TABLE 4C: ADVISORS (Advisor is now the Super Key of this table)
+  +----------+------------+---------+
+
+  | Advisor  | Course     | DeptID  |
+  +----------+------------+---------+
+
+  | Turing   | Database   | CS      |
+  | Lovelace | Security   | Cyber   |
+  +----------+------------+---------+
+  * Primary Key: {Advisor}
+
+  TABLE 4D: STUDENT_ENROLLMENT (Maintains clean matching relationships)
+  +--------+----------+
+
+  | StudID | Advisor  |
+  +--------+----------+
+
+  | 801    | Turing   |
+  | 801    | Lovelace |
+  | 802    | Turing   |
+  +--------+----------+
+  * Primary Key: Composite Key {StudID, Advisor}
+
+All four final tables are completely clean and strictly satisfy up to BCNF!
++==============================================================================+
+
+Task 17:
+What do you understand by joins? Explain all joins with examples.
++==============================================================================+
+
+|                            SQL JOINS IN RDBMS                                |
++==============================================================================+
+A JOIN clause is used in SQL to combine rows from two or more tables based on a 
+related column shared between them (typically a Primary Key and a Foreign Key). 
+It allows you to query data across separated normalized tables as if they were a 
+single unified dataset.
+
+
+OUR EXAMPLE DATASET
+--------------------------------------------------------------------------------
+We will use two simple, interconnected tables to demonstrate how each join type 
+filters and displays data.
+
+  PLAYERS TABLE                        TEAMS TABLE
+  +----+--------+---------+            +---------+---------------+
+
+  | ID | Name   | Team_ID |            | Team_ID | Team_Name     |
+  +----+--------+---------+            +---------+---------------+
+
+  | 1  | Alice  | T10     |            | T10     | Warriors      |
+  | 2  | Bob    | T20     |            | T20     | Mavericks     |
+  | 3  | Charlie| NULL    |            | T30     | Lakers        |
+  +----+--------+---------+            +---------+---------------+
+
+
+1. INNER JOIN
+--------------------------------------------------------------------------------
+* Concept: Returns only the records that have matching values in BOTH tables. 
+  If a row in one table does not find a match in the other, it is excluded.
+* Visual: Intersection of a Venn diagram (A ∩ B).
+* Result: 
+  +--------+-----------+
+
+  | Name   | Team_Name |
+  +--------+-----------+
+
+  | Alice  | Warriors  |
+  | Bob    | Mavericks |
+  +--------+-----------+
+  *(Charlie is excluded because Team_ID is NULL. Lakers team is excluded).*
+
+
+2. LEFT (OUTER) JOIN
+--------------------------------------------------------------------------------
+* Concept: Returns ALL records from the left table, along with matched records 
+  from the right table. If no match is found, NULL values fill the right side.
+* Visual: Entire Left circle.
+* Result:
+  +--------+-----------+
+
+  | Name   | Team_Name |
+  +--------+-----------+
+
+  | Alice  | Warriors  |
+  | Bob    | Mavericks |
+  | Charlie| NULL      |  <-- No matching team found, fills with NULL
+  +--------+-----------+
+
+
+3. RIGHT (OUTER) JOIN
+--------------------------------------------------------------------------------
+* Concept: Returns ALL records from the right table, along with matched records 
+  from the left table. If no match is found, NULL values fill the left side.
+* Visual: Entire Right circle.
+* Result:
+  +--------+-----------+
+
+  | Name   | Team_Name |
+  +--------+-----------+
+
+  | Alice  | Warriors  |
+  | Bob    | Mavericks |
+  | NULL   | Lakers    |  <-- No players belong to this team, fills with NULL
+  +--------+-----------+
+
+
+4. FULL (OUTER) JOIN
+--------------------------------------------------------------------------------
+* Concept: Returns all records when there is a match in either the left or 
+  right table. It essentially combines the results of both Left and Right joins.
+* Visual: Complete Union of both circles (A ∪ B).
+* Result:
+  +--------+-----------+
+
+  | Name   | Team_Name |
+  +--------+-----------+
+
+  | Alice  | Warriors  |
+  | Bob    | Mavericks |
+  | Charlie| NULL      |
+  | NULL   | Lakers    |
+  +--------+-----------+
+
+
+5. CROSS JOIN (Cartesian Product)
+--------------------------------------------------------------------------------
+* Concept: Combines every single row of the first table with every single row of 
+  the second table. It does not look for a matching key column.
+* Result Multiplier: 3 Players × 3 Teams = 9 Total Rows generated.
+* Sample of Result:
+  +--------+-----------+
+
+  | Name   | Team_Name |
+  +--------+-----------+
+
+  | Alice  | Warriors  |
+  | Alice  | Mavericks |
+  | Alice  | Lakers    | ... (repeats for Bob and Charlie)
+  +--------+-----------+
+
+
+6. SELF JOIN
+--------------------------------------------------------------------------------
+* Concept: A regular join (usually an INNER or LEFT join) where a table is 
+  joined with itself. It requires giving the table two different aliases.
+* Example: An Employee table with an `Employee_ID` and a `Manager_ID` column, 
+  where you join the table to itself to match each employee to their manager.
++==============================================================================+
+
+
+
+
+
+—-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+For reference .. if you want you can
+Plz check 
+https://www.ibm.com/docs/en/i/7.5.0?topic=concepts-relational-database
+
+
