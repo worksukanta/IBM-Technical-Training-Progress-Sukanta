@@ -1,0 +1,562 @@
+Day 11- 30th July 2026
+
+Task 1:
+What is an Actuator in Spring boot?
+A Spring Boot Actuator is a subproject of the Spring Framework that provides production-ready 
+features to help you monitor and manage your application. It exposes operational data about a 
+running application—such as its health, metrics, database connections, and environment 
+properties—using HTTP endpoints or JMX (Java Management Extensions).
+Instead of writing custom code to check if your application is alive or to inspect its internal 
+state, Actuator provides these features out of the box.
+
+Task 2:
+Advantages of Actuator
+The primary advantage of Spring Boot Actuator is that it provides instant, production-ready 
+observability with zero boilerplate code.
+======================================================================
+                  SPRING BOOT ACTUATOR - KEY ADVANTAGES
+======================================================================
+
+1. ZERO-CODE OBSERVABILITY
+   • Instant access to health, metrics, and application state.
+   • No custom boilerplate monitoring code required.
+
+2. RUNTIME TROUBLESHOOTING
+   • Change logging levels dynamically without restarting.
+   • Generate instant thread/heap dumps to diagnose production stalls.
+   • Inspect all configured Spring beans and URL mappings.
+
+3. PRODUCTION-READY INTEGRATION
+   • Native compliance with Kubernetes liveness and readiness probes.
+   • Direct exports to Grafana, Prometheus, Datadog, and New Relic.
+
+4. EASY EXTENSIBILITY
+   • Write custom endpoints using simple annotations (@Endpoint).
+   • Create custom health checks for unique company dependencies.
+
+======================================================================
+
+
+Task 3:
+What are the commonly used Actuator end points?
+======================================================================
+               COMMONLY USED SPRING BOOT ACTUATOR ENDPOINTS
+======================================================================
+
+ENDPOINT PATH         | USE CASE / DESCRIPTION
+----------------------+-----------------------------------------------
+/actuator/health      | Checks app status (UP/DOWN) & DB connectivity.
+/actuator/metrics     | Tracks OS & JVM data (CPU, memory, requests).
+/actuator/loggers     | Views and modifies log levels at runtime.
+/actuator/env         | Exposes environment & configuration properties.
+/actuator/beans       | Lists all registered Spring beans in the app.
+/actuator/threaddump  | Performs a thread dump to debug deadlocks.
+/actuator/mappings    | Shows all active HTTP URL routes and handlers.
+/actuator/info        | Displays arbitrary application information.
+/actuator/configprops | Shows a collated list of all @ConfigurationProperties.
+/actuator/heapdump    | Downloads a JVM heap dump file for memory analysis.
+----------------------+-----------------------------------------------
+* Note: Base path is /actuator. Only /health is exposed by default.
+======================================================================
+
+
+Task 4:
+Create a Small demo of Actuator to know the functionality 
+
+
+Task 5:
+What is Spring Security Architecture?
+======================================================================
+                     SPRING SECURITY ARCHITECTURE
+======================================================================
+
+1. THE CORE ENGINE: DELEGATINGFILTERPROXY & FILTERCHAINPROXY
+   • Servlet Container -> DelegatingFilterProxy -> FilterChainProxy
+   • interceptor layer that catches HTTP requests before they hit controllers.
+   • Handled via a chain of Security Filters (e.g., UsernamePasswordAuthenticationFilter).
+
+2. THE AUTHENTICATION FLOW (WHO ARE YOU?)
+   • AuthenticationFilter    -> Captures credentials, creates Authentication token.
+   • AuthenticationManager   -> Core interface managing authentication strategies.
+   • ProviderManager         -> Standard manager implementation; loops through Providers.
+   • AuthenticationProvider  -> Executes specific logic (e.g., DaoAuthenticationProvider).
+   • UserDetailsService      -> Fetches user profiles from DB/memory via loadUserByUsername().
+   • PasswordEncoder         -> Verifies if passwords match using secure hashing (BCrypt).
+
+3. THE STORAGE: SECURITYCONTEXTHOLDER
+   • ContextHolder -> SecurityContext -> Authentication (Principal/UserDetails)
+   • Stores authentication tokens globally across the current thread execution.
+
+4. THE AUTHORIZATION FLOW (WHAT CAN YOU DO?)
+   • AccessDecisionManager   -> Validates request permissions against user roles.
+   • Security Interceptors   -> Blocks or grants route/method execution.
+
+======================================================================
+
+
+Task 6:
+What are the core components of Spring security architecture
+======================================================================
+               SPRING SECURITY: 8 CORE COMPONENTS
+======================================================================
+
+1. SecurityContextHolder
+   • The core storage brain.
+   • Holds the SecurityContext using ThreadLocal by default.
+   • Provides universal access to the currently authenticated user.
+
+2. SecurityContext
+   • A simple wrapper inside the SecurityContextHolder.
+   • Contains the currently validated Authentication object.
+
+3. Authentication
+   • Represents the user request or session identity.
+   • Principal: The user details object (usually UserDetails).
+   • Credentials: The password (often cleared after authentication).
+   • Authorities: Granted permissions or roles (e.g., ROLE_USER).
+
+4. UserDetails & UserDetailsService
+   • UserDetails: Core interface modeling user profiles (username, password).
+   • UserDetailsService: Core DAO service. 
+   • Loads user profiles from a database using a single string username.
+
+5. AuthenticationManager
+   • The API orchestrator that defines how authentication occurs.
+   • ProviderManager is the standard default implementation.
+
+6. AuthenticationProvider
+   • The worker instances querying specific identity repositories.
+   • Validates passwords using a standard PasswordEncoder.
+   • Examples: DaoAuthenticationProvider, JwtAuthenticationProvider.
+
+7. SecurityFilterChain
+   • A sequential array of specialized servlet filters.
+   • Intercepts raw HTTP requests to enforce transport/session security.
+
+8. AuthorizationManager
+   • The runtime gatekeeper replacing older AccessDecisionManagers.
+   • Evaluates if an authenticated user possesses valid route privileges.
+
+======================================================================
+
+
+Task 7:
+Can you create a diagrammatic representation of Spring Security architecture
+===========================================================================================
+                          SPRING SECURITY ARCHITECTURE FLOW
+===========================================================================================
+
+ [ HTTP Request ]
+        │
+        ▼
+ 1. [ DelegatingFilterProxy ] ──────► Delegates to Spring-managed context
+        │
+        ▼
+ 2. [ SecurityFilterChain ]  ──────► Array of filters processing the request
+        │
+        ▼
+ 3. [ AuthenticationFilter ] ──────► Extracts credentials from request
+        │
+        ▼
+ 4. [ AuthenticationManager ] ─────► Orchestrates authentication process
+        │
+        ▼
+ 5. [ AuthenticationProvider ] ────► Executes specific auth logic (e.g., Form, JWT)
+        │
+        ├─► [ UserDetailsService ] ──► Fetches UserDetails from DB/Memory
+        │
+        └─► [ PasswordEncoder ]    ──► Validates password match (e.g., BCrypt)
+        │
+        ▼
+ 6. [ SecurityContextHolder ] ─────► Stores Authentication object if successful
+        │
+        ▼
+ 7. [ AuthorizationManager ] ──────► Evaluates roles/permissions (RBAC)
+        │
+        ├─► [ Allowed ] ───────────► Access granted to Controller / Resource
+        │
+        └─► [ Denied ] ────────────► Throws AccessDeniedException (403 Forbidden)
+
+===========================================================================================
+
+
+Task 8:
+What is a Security filter chain? Give example code
+======================================================================
+                     WHAT IS A SECURITY FILTER CHAIN?
+======================================================================
+
+• A sequential pipeline of Servlet Filters that intercept incoming HTTP 
+  requests before they reach your Controller.
+• Each filter handles a specific security concern (e.g., CSRF protection, 
+  CORS verification, Form Login, JWT processing, Authorization checks).
+• Configured by defining a 'SecurityFilterChain' bean in Spring Boot.
+======================================================================
+
+
+Task 9:
+What is an Authentication Manager? Give example code
+======================================================================
+                    WHAT IS AN AUTHENTICATION MANAGER?
+======================================================================
+
+• The core interface strategy managing authentication in Spring Security.
+• Contains a single method: authenticate(Authentication authentication).
+• It does not authenticate requests directly; instead, it delegates to 
+  a list of registered 'AuthenticationProviders'.
+• If credentials are valid, it returns a fully populated, authenticated
+  Authentication object (including authorities/roles).
+======================================================================
+
+
+Task 10:
+What are Authentication Proividers? Give example and code
+======================================================================
+                  WHAT ARE AUTHENTICATION PROVIDERS?
+======================================================================
+
+• The concrete workers that execute specific authentication logic.
+• Orchestrated by the AuthenticationManager via a collection loop.
+• Processes a specific type of Authentication token (e.g., Username/Password).
+• Returns a fully populated, authenticated token if validation succeeds, 
+  or throws an AuthenticationException if verification fails.
+======================================================================
+
+Task 11:
+What is USerDeatilsService? Give example
+======================================================================
+                     WHAT IS A USERDETAILSSERVICE?
+======================================================================
+
+• A core Spring Security interface used to retrieve user authentication 
+  and authorization data.
+• It features exactly one method: loadUserByUsername(String username).
+• It does not authenticate users; it simply fetches data from your chosen 
+  data source (Database, LDAP, In-Memory) and models it for the system.
+• Returns a 'UserDetails' object containing passwords, roles, and status flags.
+======================================================================
+
+
+Task 12:
+What is Password encoder? Give example
+======================================================================
+                     WHAT IS A PASSWORD ENCODER?
+======================================================================
+
+• A core Spring Security interface used to safely store and match user 
+  passwords.
+• It provides a one-way cryptographic hash of passwords to protect them 
+  even if your database is breached.
+• It never decrypts passwords; it only evaluates if an incoming raw 
+  password matches an existing database hash.
+======================================================================
+
+
+Task 13:
+What is SecurityContextHeader?
+======================================================================
+                     WHAT IS SECURITYCONTEXTHOLDER?
+======================================================================
+
+• The storage vault of Spring Security.
+• Its primary job is to hold the details of the currently authenticated 
+  user (the SecurityContext).
+• By default, it uses a 'ThreadLocal' strategy to store these details.
+• This means security information is automatically isolated and available 
+  to any code running inside the exact same execution thread.
+======================================================================
+
+
+
+Task 14:
+Finally give the security Architecture  internal functionality? How actually it works internally… 
+step by step if you can explain
+ [ HTTP Request ] 
+        │
+        ▼
+ 1. [ DelegatingFilterProxy ] ──────► Intercepts servlet request, finds Spring Bean
+        │
+        ▼
+ 2. [ FilterChainProxy ] ───────────► Evaluates matching SecurityFilterChain
+        │
+        ▼
+ 3. [ SecurityFilterChain ] ────────► Sequential loop through internal filters
+        │
+        ▼
+ 4. [ AuthenticationFilter ] ───────► Extracts raw credentials -> Unauthenticated Token
+        │
+        ▼
+ 5. [ AuthenticationManager ] ──────► Iterates through registered providers
+        │
+        ▼
+ 6. [ AuthenticationProvider ] ─────► Loads UserDetails from DB -> Validates Password
+        │
+        ▼
+ 7. [ SecurityContextHolder ] ──────► Saves Fully Populated Token into ThreadLocal
+        │
+        ▼
+ 8. [ AuthorizationManager ] ───────► Checks target URL/Method role permissions
+        │
+        ▼
+ [ Target Controller Endpoint ]
+
+==========================================================================================
+                 SPRING SECURITY INTERNAL WORKFLOW (STEP-BY-STEP)
+==========================================================================================
+
+[STEP 1: INTERCEPTION]
+ • Tomcat intercepts HTTP request ──► Passes to DelegatingFilterProxy.
+ • Bridges the request from the Servlet container into the Spring application context.
+
+[STEP 2: ROUTING]
+ • DelegatingFilterProxy ──► Hands request over to FilterChainProxy bean.
+ • Matcher searches configuration to find the active SecurityFilterChain for the URL.
+
+[STEP 3: EXTRACTION]
+ • Request traverses filters ──► Arrives at AuthenticationFilter (e.g., Form Login).
+ • Reads raw credentials from request ──► Creates an UN-AUTHENTICATED token object.
+
+[STEP 4: ORCHESTRATION]
+ • Filter passes the unauthenticated token ──► AuthenticationManager (ProviderManager).
+ • Manager loops through registered AuthenticationProviders to find a matching worker.
+
+[STEP 5: VALIDATION]
+ • Selected AuthenticationProvider ──► Invokes UserDetailsService.loadUserByUsername().
+ • Database profile returns as UserDetails (contains real hash + user roles).
+ • Provider calls PasswordEncoder.matches(input, hash) to verify credentials.
+
+[STEP 6: PROMOTION]
+ • Validation passes ──► Provider builds a brand new AUTHENTICATED token object.
+ • Token is stamped with user authorities/roles and flagged as "authenticated = true".
+
+[STEP 7: STORAGE]
+ • Filter catches authenticated token ──► Injects it into SecurityContextHolder.
+ • Saves the identity to a ThreadLocal context, locking it to the current thread execution.
+
+[STEP 8: ENFORCEMENT]
+ • Request hits AuthorizationManager before reaching your Controller.
+ • Checks roles inside SecurityContextHolder against URL privileges.
+ • Success: Routes to @RestController ──► Failure: Throws AccessDeniedException (403).
+
+==========================================================================================
+
+
+
+Task 15:
+What is Thymeleaf? Explain? Why is it used?
+======================================================================
+                         WHAT IS THYMELEAF?
+======================================================================
+
+• A modern server-side Java template engine for web environments.
+• Its primary job is to generate dynamic HTML, XML, XHTML, or text.
+• Commonly paired with Spring Boot to build MVC web applications.
+• Processes backend data on the server before sending pure HTML to 
+  the client browser.
+======================================================================
+
+
+Task 16:
+Create a demo on thymeleaf .
+Done, check in src.
+
+Task 17:
+What do you think are the advantages of using thymeleaf?
+======================================================================
+                    ADVANTAGES OF USING THYMELEAF
+======================================================================
+
+1. NATURAL TEMPLATING
+   • Templates are pure, valid HTML5 documents.
+   • Designers can open templates directly in browsers as static mockups.
+   • Developers can inject live backend data without breaking layout structure.
+
+2. SEAMLESS SPRING BOOT INTEGRATION
+   • Native support for Spring MVC Model binding and architecture.
+   • Automatic integration with Spring Security for UI role blocking.
+   • Built-in handling for Spring Form validation and error binding.
+
+3. SECURITY BY DEFAULT
+   • Automatic HTML escaping prevents Cross-Site Scripting (XSS) attacks.
+   • Built-in support for CSRF token generation on forms.
+
+4. NO CONTAINER DEPENDENCY
+   • Unlike JSP, it does not rely on a servlet container to compile.
+   • Can be executed inside standard Java standalone applications.
+
+5. POWERFUL LAYOUT DIALECT
+   • Simple fragment creation allows you to reuse common components.
+   • Easily include headers, footers, or sidebars across all view layers.
+======================================================================
+
+
+Task 18:
+What is Caching in Springboot?
+======================================================================
+                     WHAT IS CACHING IN SPRING BOOT?
+======================================================================
+
+• A mechanism to temporarily store frequently accessed data in a fast 
+  memory layer.
+• Its primary job is to eliminate repetitive, expensive operations like
+  heavy database queries, complex calculations, or network API calls.
+• Speeds up response times and significantly reduces server resource load.
+• Spring Boot provides a unified caching abstraction using simple
+  declarative annotations (@Cacheable, @CacheEvict).
+======================================================================
+
+
+Task 19:
+What are the features of SpringBoot?
+======================================================================
+                  FEATURES OF SPRING BOOT CACHING
+======================================================================
+
+1. DECLARATIVE ANNOTATION-BASED CONTROL
+   • Enable or alter cache states using zero-boilerplate annotations.
+   • Manage logic cleanly via @Cacheable, @CachePut, and @CacheEvict.
+
+2. TECHNOLOGY ABSTRACTION LAYER
+   • Isolates application business logic from underlying storage tech.
+   • Swap from in-memory maps to Redis or Ehcache with zero code changes.
+
+3. DYNAMIC KEY GENERATION
+   • Automatically builds lookup keys based on target method parameters.
+   • Supports complex custom keys using Spring Expression Language (SpEL).
+
+4. CONDITIONAL CACHING
+   • Fine-tune cache execution using 'condition' or 'unless' checks.
+   • Filter entries based on input arguments or runtime return values.
+
+5. SPRING BOOT AUTO-CONFIGURATION
+   • Instantly sets up cache managers based on project dependencies.
+   • Zero configuration required to start prototyping with internal maps.
+======================================================================
+
+
+Task 20: What are the types of Caching ?explain each type.
+======================================================================
+                     THE 4 MAIN TYPES OF CACHING
+======================================================================
+
+1. IN-MEMORY CACHING (LOCAL CACHE)
+   • Data is stored directly inside the RAM of the running application.
+   • Fastest response time because it avoids network overhead entirely.
+   • Isolated to a single server instance; data is lost if the app restarts.
+   • Ideal for static lookup tables, configuration data, and single-instance apps.
+   • Common tools: Caffeine, Ehcache, ConcurrentHashMap.
+
+2. DISTRIBUTED CACHING
+   • Data is stored in a dedicated, external cluster separate from the app.
+   • Multiple application instances connect to and share the same cache pool.
+   • Data survives application restarts and scales independently.
+   • Adds slight network latency compared to local memory caching.
+   • Ideal for microservices, cloud deployments, and user session storage.
+   • Common tools: Redis, Memcached, Hazelcast.
+
+3. DATABASE CACHING
+   • Built-in memory layers configured directly inside the database engine.
+   • Intercepts queries before they trigger expensive disk read operations.
+   • Speeds up repetitive SQL queries automatically behind the scenes.
+   • Ideal for read-heavy transactional databases.
+   • Common tools: MySQL Query Cache, PostgreSQL Shared Buffers.
+
+4. WEB / HTTP CACHING
+   • Stores web assets (HTML, images, API responses) closer to the end user.
+   • Can happen in the client browser, proxy servers, or Content Delivery Networks.
+   • Uses HTTP headers (like Cache-Control, ETag) to determine expiration.
+   • Drastically reduces the volume of traffic ever reaching your backend.
+   • Common tools: Cloudflare, Varnish, Nginx, Browser Cache.
+======================================================================
+
+
+Task 21: List down annotations of Caching with usage.
+======================================================================
+               SPRING BOOT CACHING ANNOTATIONS & USAGE
+======================================================================
+
+1. @EnableCaching
+   • Usage: Applied to Configuration or Main Application classes.
+   • Purpose: Activates Spring's background caching processor proxy.
+   • Example:
+     @SpringBootApplication
+     @EnableCaching
+     public class App { ... }
+
+2. @Cacheable
+   • Usage: Applied on methods that fetch data (Read operations).
+   • Purpose: Looks for data in cache first. If found, returns it. 
+              If not, runs the method and saves the output to cache.
+   • Example:
+     @Cacheable(value = "users", key = "#id")
+     public User getUser(Long id) { ... }
+
+3. @CachePut
+   • Usage: Applied on methods that update data (Write/Update operations).
+   • Purpose: Always runs the target method logic and forces an update 
+              to the cache entry with the new result.
+   • Example:
+     @CachePut(value = "users", key = "#user.id")
+     public User updateUser(User user) { ... }
+
+4. @CacheEvict
+   • Usage: Applied on methods that delete data (Remove operations).
+   • Purpose: Deletes specific keys or the entire cache pool from memory.
+   • Parameters: 'allEntries = true' wipes out the complete cache block.
+   • Example:
+     @CacheEvict(value = "users", key = "#id")
+     public void deleteUser(Long id) { ... }
+
+5. @Caching
+   • Usage: Applied when multiple operations are needed on one method.
+   • Purpose: Groups multiple caching annotations (like evicting from 
+              different cache regions at the same time).
+   • Example:
+     @Caching(evict = { @CacheEvict("users"), @CacheEvict("orders") })
+     public void resetData() { ... }
+
+6. @CacheConfig
+   • Usage: Applied at the Class/Controller/Service level.
+   • Purpose: Defines shared cache settings (like cache names) once 
+              so you don't repeat them on every individual method.
+   • Example:
+     @Service
+     @CacheConfig(cacheNames = "products")
+     public class ProductService { ... }
+======================================================================
+
+Task 22: What do you think is @InjectMocks annotation does?
+======================================================================
+                     WHAT DOES @INJECTMOCKS DO?
+======================================================================
+
+• A Mockito annotation used in unit tests to instantiate the target 
+  class being tested (the System Under Test).
+• It automatically injects mock fields (created via @Mock or @Spy) into 
+  this target instance.
+• Eliminates the need to write manual constructor or setter dependency 
+  injection boilerplate code inside your test setup.
+======================================================================
+
+
+Task 23:
+Write about @spy annotation and explain the functionality in a small piece of code
+
+
+Task 24:
+Why is @Mock annotation used? 
+2.31 to 2.33
+
+Task 25:
+What is Partial mocking? Which annotation is used for partial mocking?
+2.34 to 2.40
+
+Task 26:
+For the code given what is @verify annotation used for and why do we use it?
+2.41 to 2.45
+
+Task 27:
+List down few more annotations that we use for mocking ..
+2.46 to 2.50
+
+
