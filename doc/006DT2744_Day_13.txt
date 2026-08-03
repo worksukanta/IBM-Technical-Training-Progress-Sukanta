@@ -1,0 +1,201 @@
+Day 13- 03rd August 2026
+DBMS 
+
+Task 1: What is an ER diagram? Draw an entity relationship  diagram with datatypes.
+=======================================================================
+ENTITY-RELATIONSHIP (ER) DIAGRAM SCHEMATIC AND DOCUMENTATION
+=======================================================================
+
+1. WHAT IS AN ER DIAGRAM?
+-----------------------------------------------------------------------
+An Entity-Relationship (ER) diagram is a visual flowchart that
+illustrates how entities (such as people, objects, or concepts) relate
+to one another within a relational database system. It serves as a
+structural blueprint used in software engineering to design, debug, and
+understand underlying database architectures.
+
+
+2. LOGICAL SCHEMA RELATIONSHIPS & CARDINALITY
+-----------------------------------------------------------------------
+[ CUSTOMER ] --------(1)-----[ Places ]-----(N)--------> [ ORDERS ]
+                                                             |
+                                                            (1)
+                                                             |
+                                                         [ Contains ]
+                                                             |
+                                                            (N)
+                                                             v
+[ PRODUCT ] --------(1)-----[ Ordered In ]--(N)--------> [ ORDER_ITEM ]
+
+
+3. PHYSICAL ER DIAGRAM (ASCII LAYOUT WITH DATATYPES)
+-----------------------------------------------------------------------
+Link: https://drive.google.com/file/d/1ANHBmcFGxNZxwKcxPgoRopN6lTCpxP-s/view
+
+4. CORE RELATIONAL LOGIC DEFINITIONS
+-----------------------------------------------------------------------
+* CUSTOMER to ORDERS (1:N):
+  A customer places zero or multiple orders. Every order row maps to 
+  exactly one parent purchaser profile.
+
+* ORDERS to ORDER_ITEM (1:N):
+  An individual order invoice splits into one or many line items mapping 
+  individual purchase entries.
+
+* PRODUCT to ORDER_ITEM (1:N):
+  A warehouse catalog item can appear inside multiple order lines across 
+  separate customers, or exist simply on a shelf without being ordered.
+
+-------------------------------------------------------------------------------
+
+Task 2:
+What do you understand by indexing in DBMS? How does it work?
+=======================================================================
+INDEXING IN DBMS: DEFINITION AND OPERATIONAL MECHANICS
+=======================================================================
+
+1. WHAT IS INDEXING?
+-----------------------------------------------------------------------
+Indexing is a performance tuning technique that creates a separate data
+structure (typically a B+ Tree) to speed up data retrieval. It copies
+specific column values and pairs them with disk memory pointers,
+acting like a textbook index to avoid scanning the entire database.
+
+
+2. HOW IT WORKS
+-----------------------------------------------------------------------
+* Creation: The DBMS extracts data from indexed columns, sorts it, and
+  organizes it into a balanced hierarchical tree structure.
+* Querying: When a query runs, the search engine navigates the tree
+  nodes using fast binary comparisons instead of sequential row reads.
+* Retrieval: The engine finds the target key at the bottom leaf node,
+  reads its physical Row ID (RID) pointer, and jumps directly to that
+  exact disk location to load the record.
+
+
+3. VISUAL FLOW COMPARISON
+-----------------------------------------------------------------------
+WITHOUT INDEX (Full Table Scan - O(N) Complexity):
+[Row 1] -> [Row 2] -> [Row 3] -> [Row 4] ... Go through every row.
+
+WITH INDEX (B+ Tree Lookup - O(log N) Complexity):
+               [ Root Node ]
+                /         \
+        [ Internal ]     [ Internal ]
+         /        \       /        \
+     [Leaf1]    [Leaf2] [Leaf3]  [Leaf4] 
+        |
+        +--> [Row ID Pointer] ----> Jumps directly to target row.
+
+
+4. THE CORE TRADE-OFF
+-----------------------------------------------------------------------
+* Reads (SELECT): Speeds up data retrieval significantly.
+* Writes (INSERT/UPDATE/DELETE): Slows down data entry because the 
+  DBMS must recalculate and balance the index tree on every change.
+-------------------------------------------------------------------------------------
+
+Task 3:
+Do you think Indexing strategy improves the query  performance ? explain .
+=======================================================================
+INDEXING STRATEGY AND QUERY PERFORMANCE EVALUATION
+=======================================================================
+
+1. DIRECT ANSWER
+-----------------------------------------------------------------------
+Yes. An intentional indexing strategy dramatically improves query
+performance. It transitions database lookups from slow, linear brute-
+force scans into fast, logarithmic mathematical traversals. However,
+an unplanned or excessive indexing strategy will degrade performance.
+
+
+2. HOW STRATEGY IMPR0VES PERFORMANCE (THE BENEFITS)
+-----------------------------------------------------------------------
+* Drastic I/O Reduction:
+  Instead of loading millions of data pages from disk into memory
+  (Full Table Scan), the system reads only a few index pages.
+
+* Accelerated Join Operations:
+  Indexes on Foreign Keys allow the engine to match relational rows 
+  instantly across separate tables without heavy sorting overhead.
+
+* Instant Sorting and Grouping:
+  Because B+ Tree indexes store data keys in a pre-sorted state,
+  queries utilizing "ORDER BY" or "GROUP BY" bypass expensive in-
+  memory sorting steps.
+
+
+3. WHEN STRATEGY BACKFIRES (THE RISKS)
+-----------------------------------------------------------------------
+* The Write Penalty (DML Overhead):
+  Every INSERT, UPDATE, and DELETE statement forces the engine to
+  modfy, split, and rebalance the underlying index trees.
+
+* Index Bloat:
+  Indexes consume storage space. Indexing columns with low selectivity
+  (like a Boolean "Is_Active" column) wastes disk cache space and 
+  causes the query optimizer to ignore the index entirely.
+
+
+4. STRATEGIC BEST PRACTICES
+-----------------------------------------------------------------------
+* Index High-Selectivity Columns: Focus on columns containing unique 
+  or highly diverse values (e.g., email, UUID, or SKU numbers).
+* Utilize Composite Indexes carefully: Order multi-column index keys 
+  from the most frequently filtered column to the least filtered.
+* Monitor Usage: Routinely drop unused indexes to reclaim write speed.
+____________________________________________________________________________
+
+Task 4:
+What are the ACID properties in RDBMS? Explain.
+=======================================================================
+ACID PROPERTIES IN RDBMS: DEFINITION AND EXPLANATION
+=======================================================================
+
+1. DIRECT ANSWER
+-----------------------------------------------------------------------
+ACID represents four core rules ensuring database transactions are
+processed safely. They guarantee data integrity and accuracy even 
+during power outages, network errors, or multi-user crashes.
+
+
+2. THE FOUR ACID PROPERTIES BREAKDOWN
+-----------------------------------------------------------------------
+* ATOMICITY ("All or Nothing")
+  Every query in a transaction must complete successfully, or the
+  entire operation is canceled and rolled back. No partial writes.
+  - Example: A bank transfer must both deduct money and add money.
+    If adding fails, the deduction is reversed immediately.
+
+* CONSISTENCY ("Rules Enforcement")
+  A transaction can only change a database from one valid state to
+  another. It strictly enforces all constraints, keys, and rules.
+  - Example: A rule blocks negative balances. Any transfer that
+    creates a negative value will be automatically aborted.
+
+* ISOLATION ("Concurrently Independent")
+  Concurrent transactions run independently without interfering with
+  each other. Uncommitted changes remain invisible to other users.
+  - Example: If two users buy the last ticket at the exact same
+    time, the system isolates them so only one gets the seat.
+
+* DURABILITY ("Permanent Survival")
+  Once a transaction commits, its modifications are permanently
+  written to disk storage. The data will survive a system crash.
+  - Example: Once you get a success receipt, the records are safe
+    inside hard drive logs even if the server drops power.
+
+
+3. CORE MECHANISMS
+-----------------------------------------------------------------------
+Property:    Enforced By:
+-----------  ----------------------------------------------------------
+Atomicity    Transaction Undo Logs (Rollbacks).
+Consistency  Schema Constraints and Data Types.
+Isolation    Locking Protocols and MVCC.
+Durability   Write-Ahead Logging (WAL) and Redo Logs.
+
+=======================================================================
+
+Task 5: Hands on PostgreSQL
+
