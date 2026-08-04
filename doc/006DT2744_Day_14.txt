@@ -1,0 +1,460 @@
+Day 14 - 04th Aug 2026
+
+Task 1:
+What do you understand by Git collaboration?
+using Git collaboration we can work on a team project in a smoother manner. It helps to
+fetch other's work into our personal repository, helps to send our work to others. It make Rollback
+Mechanism easier and secure.
+
+Task 2:
+Why is collaboration necessary while working on git?
+1. It helps to check and resolve development conflicts in an efficient manner.
+2. It helps to rollback to previous versions, if desired outcomes do not match.
+3. It helps to divide the work efficiently among peer workers.
+4. It helps to merge multiple subtasks of a project in a smooth and efficient manner.
+
+Task 3:
+What are the commands that we use while collaborating?
+git pull, fetch, push, branch, merge, rebase, reset
+
+Task 4:
+fetch -> create branch -> commit -> pull -> push -> create pull request -> code review -> approve
+-> merge.
+
+Task 5:
+Give some to do practices that we need to follow while working on Git Repo on a daily basis.
+1. write meaningful commit messages.
+2. provide constructive code reviews.
+3. Always pull recent updates first and then push the code.
+4. resolve conflicts in local machines before pushing the code.
+5. Try not to pull the entire codebase, pull only the require branch you are supposed to work.
+
+Task 6:
+Create a demo typescript file and execute it
+done
+
+Task 7:
+Create an interface and try it out?
+done
+
+Task 8:
+In the above code use optional variable ?
+done
+
+Task 9:
+Create  a demo with constructor, default and with parameterised.
+done
+
+Task 10;
+What are primitive and special data types in typescript?
+========================================================================
+                   TYPESCRIPT DATA TYPES EXPLAINED
+========================================================================
+
+------------------------------------------------------------------------
+1. PRIMITIVE TYPES
+------------------------------------------------------------------------
+WHAT ARE THEY?
+Primitive types are the most basic data units built directly into the 
+JavaScript engine. They represent a single, immutable value (they cannot 
+be broken down into smaller pieces) and do not have methods or 
+properties of their own.
+
+// string: Used for textual data or sequences of characters.
+const username: string = "Alice";
+
+// number: Handles all numbers, both whole integers and decimals.
+const age: number = 30;
+const pi: number = 3.14159;
+
+// boolean: A simple flag that can only be true or false.
+const isPremiumUser: boolean = true;
+
+// null: A deliberate, intentional assignment representing an empty value.
+const emptyResponse: null = null;
+
+// undefined: The default state of variables that have been declared 
+// but not yet given any value.
+let unassignedVariable: undefined = undefined;
+
+// bigint: Used for ultra-large integers that exceed the safe math 
+// limit of standard numbers.
+const massiveCounter: bigint = 9007199254740991n;
+
+// symbol: Creates a completely unique token, mostly used to prevent 
+// property name collisions in complex objects.
+const uniqueKey: symbol = Symbol("uniqueId");
+
+
+------------------------------------------------------------------------
+2. SPECIAL TYPES
+------------------------------------------------------------------------
+WHAT ARE THEY?
+Special types are advanced rules invented by TypeScript. They do not 
+exist as actual data structures at runtime in JavaScript. Instead, they 
+exist purely during development to give you advanced power over the 
+compiler, helping you manage uncertain data, runtime errors, or 
+untyped legacy code safely.
+
+// any: Completely disables the type checker. It lets a variable shift 
+// to any data type, which bypasses all the safety benefits of TypeScript.
+let chaoticData: any = "Start as string";
+chaoticData = 42; 
+
+// unknown: The type-safe brother of 'any'. You can store anything in it, 
+// but TypeScript forces you to run a type check before you can use it.
+let securedData: unknown = "Hello world";
+if (typeof securedData === "string") {
+    console.log(securedData.toUpperCase()); // Allowed only inside this check
+}
+
+// void: Explicitly states that a function finishes its work successfully 
+// but spits back absolutely no data to the caller.
+function logSystemAlert(message: string): void {
+    console.warn(`[ALERT]: ${message}`);
+}
+
+// never: Represents code execution paths that physically cannot finish, 
+// such as a function that crashes the app or runs infinitely.
+function terminateApplication(): never {
+    throw new Error("System failure. Process stopped permanently.");
+}
+
+// object: Explicitly locks the type down to any non-primitive structure 
+// (like arrays, objects, or functions).
+const systemConfig: object = { theme: "dark", version: 2.1 };
+------------------------------------------------------------
+
+Task 11:
+Create a class  with access modifiers.
+done
+
+Task 12:
+To create a typescript file and run it… what are the steps … that we need to follow.. (lets suppose if I am creating ts file for the first time in my sys). 
+create a file with .ts extension.
+tsc filename.ts
+node filename.js
+
+
+Task 13:
+Create a demo and see how generics work in ts.
+========================================================================
+                     UNDERSTANDING TYPESCRIPT GENERICS
+========================================================================
+
+------------------------------------------------------------------------
+1. WHAT ARE GENERICS?
+------------------------------------------------------------------------
+Generics act like "variables for types". Instead of locking a function, 
+interface, or class down to a single type (like string or number), 
+Generics allow you to pass the data type as an argument when you call it.
+
+This gives you total code reuse while maintaining complete type safety.
+
+
+------------------------------------------------------------------------
+2. THE PROBLEM (Without Generics)
+------------------------------------------------------------------------
+If you want a component that wraps data, using 'any' destroys type 
+safety, while duplicating code for every type creates massive bloat.
+
+// Lost type safety completely:
+function badIdentity(arg: any): any {
+    return arg; 
+}
+const result = badIdentity("Hello"); // VS Code won't auto-complete string methods!
+
+
+------------------------------------------------------------------------
+3. THE SOLUTION (Using Generics)
+------------------------------------------------------------------------
+We use a type parameter (typically named <T>) to capture the incoming type.
+
+// The <T> captures the exact type the user passes in
+function identity<T>(arg: T): T {
+    return arg;
+}
+
+// Usage 1: Passing a string explicitly
+const output1 = identity<string>("My String"); // Type is explicitly 'string'
+
+// Usage 2: TypeScript automatically infers the type from the argument!
+const output2 = identity(42); // Type is implicitly 'number'
+
+
+------------------------------------------------------------------------
+4. REAL-WORLD DEMO CODE
+------------------------------------------------------------------------
+Copy and paste this clean code example straight into your VS Code editor:
+
+// --- A. Generic Interface ---
+interface KeyValuePair<K, V> {
+    key: K;
+    value: V;
+}
+
+const apiToken: KeyValuePair<string, number> = {
+    key: "auth_id",
+    value: 9942
+};
+
+// --- B. Generic Class (Data Wrapper) ---
+class DataStorage<T> {
+    private items: T[] = [];
+
+    addItem(item: T): void {
+        this.items.push(item);
+    }
+
+    getItems(): T[] {
+        return this.items;
+    }
+}
+
+// Create a text storage instance
+const textStorage = new DataStorage<string>();
+textStorage.addItem("Logs");
+textStorage.addItem("Errors");
+console.log(textStorage.getItems()); // Safe string array outputs
+
+// Create a number storage instance safely
+const scoreStorage = new DataStorage<number>();
+scoreStorage.addItem(100);
+scoreStorage.addItem(85);
+
+
+// --- C. Generic Constraints (Restricting the Type) ---
+// By using 'extends', we force the generic to have specific properties.
+interface HasLength {
+    length: number;
+}
+
+function logLength<T extends HasLength>(arg: T): void {
+    console.log(`Length is: ${arg.length}`); // Perfectly safe because of the constraint
+}
+
+logLength("Hello");       // Valid (strings have a length property)
+logLength([1, 2, 3]);     // Valid (arrays have a length property)
+// logLength(123);        // Error! Numbers do not have a length property
+------------------------------------------------------------
+
+Task 14:
+What are type annotations in typescript?
+========================================================================
+                    UNDERSTANDING TYPE ANNOTATIONS
+========================================================================
+
+------------------------------------------------------------------------
+1. WHAT ARE TYPE ANNOTATIONS?
+------------------------------------------------------------------------
+A type annotation is an explicit way of telling TypeScript what kind of
+data a variable, function parameter, or object property is allowed to 
+hold. 
+
+You apply an annotation by adding a colon (:) followed by the type 
+name directly after your variable declaration.
+
+Syntax:
+let variableName: type = value;
+
+
+------------------------------------------------------------------------
+2. WHY USE THEM?
+------------------------------------------------------------------------
+- Contract enforcement: The compiler will throw an error immediately 
+  if you try to assign an incorrect data type.
+- Enhanced editor tooling: VS Code uses these annotations to provide 
+  accurate auto-completion, inline documentation, and error alerts.
+- Code readability: It serves as clear documentation for other 
+  developers looking at your codebase.
+
+
+------------------------------------------------------------------------
+3. DEMO CODE EXAMPLES
+------------------------------------------------------------------------
+Copy and paste this clean code example straight into your VS Code editor:
+
+// --- A. Basic Variables ---
+const username: string = "Bob";
+const accountBalance: number = 450.75;
+const isEmailVerified: boolean = false;
+
+
+// --- B. Arrays and Objects ---
+// Explicitly stating that this array can only contain numbers
+const luckyNumbers: number[] =;
+
+// Defining the exact shape of an object literal
+const userProfile: { id: number; role: string } = {
+    id: 101,
+    role: "moderator"
+};
+
+
+// --- C. Function Parameters and Returns ---
+// Annotating the inputs (a and b) and the expected output return type
+function addNumbers(a: number, b: number): number {
+    return a + b;
+}
+
+
+------------------------------------------------------------------------
+4. TYPE ANNOTATION VS. TYPE INFERENCE
+------------------------------------------------------------------------
+You do not always need to write type annotations manually. If you assign
+a value right away, TypeScript will automatically guess (infer) the type.
+
+let inferredString = "Hello"; // TypeScript automatically types this as string
+let annotatedString: string = "Hello"; // Manual explicit annotation
+
+Pro-Tip: Use explicit annotations when declaring a variable without an
+initial value, or when writing function boundaries (inputs/outputs) to 
+ensure structural integrity.
+
+
+Task 15:
+What is the purpose of the any keyword in typescript?
+to override type safety. using any keyword, we can use the variable as JavaScript 
+variables
+
+Task 16:
+Can you give an example to show the difference between any and unknown.
+========================================================================
+                      ANY VS UNKNOWN DIFFERENCE
+========================================================================
+
+The core difference is safety: 'any' completely turns off type checking 
+and lets you do anything (unsafe). 'unknown' accepts any value but 
+blocks you from using it until you prove what type it is (safe).
+
+------------------------------------------------------------------------
+1. THE DANGER OF 'ANY' (Unsafe)
+------------------------------------------------------------------------
+TypeScript allows you to call any method on an 'any' variable, even if 
+it does not exist. This will crash at runtime.
+
+let dynamicValue: any = 42;
+
+// TypeScript allows this compilation, but it will CRASH at runtime 
+// because numbers do not have a .toUpperCase() method!
+console.log(dynamicValue.toUpperCase()); 
+
+
+------------------------------------------------------------------------
+2. THE PROTECTION OF 'UNKNOWN' (Safe)
+------------------------------------------------------------------------
+TypeScript forces you to check the type before performing operations. 
+This prevents runtime crashes.
+
+let securedValue: unknown = 42;
+
+// COMPILATION ERROR: TypeScript blocks this immediately because it 
+// doesn't know if the value is a string.
+// console.log(securedValue.toUpperCase()); 
+
+// CORRECT WAY: Use a Type Guard (typeof check) to prove the type first
+if (typeof securedValue === "string") {
+    // Inside this block, TypeScript knows securedValue is a string
+    console.log(securedValue.toUpperCase()); 
+} else {
+    console.log("Operation skipped: Value is not a string!");
+}
+
+
+------------------------------------------------------------------------
+3. SUMMARY COMPARISON
+------------------------------------------------------------------------
+Operation                     |  type: any  |  type: unknown
+------------------------------------------------------------------------
+Can assign anything to it?    |     YES     |      YES
+Can read any property?        |     YES     |      NO (Requires check)
+Can call it as a function?    |     YES     |      NO (Requires check)
+Bypasses type safety?         |     YES     |      NO
+
+
+Task 17:
+What is the tsconfig.json file used for ?
+========================================================================
+                     UNDERSTANDING TSCONFIG.JSON
+========================================================================
+
+------------------------------------------------------------------------
+1. WHAT IS IT?
+------------------------------------------------------------------------
+The tsconfig.json file is a configuration file that marks the root of a 
+TypeScript project. It tells the TypeScript compiler (tsc) exactly how 
+to compile your TypeScript files (.ts) into standard JavaScript (.js).
+
+Without this file, the compiler will use default settings, which might 
+not match your project environment or framework requirements.
+
+
+------------------------------------------------------------------------
+2. KEY RESPONSIBILITIES
+------------------------------------------------------------------------
+- Target Environment: Specifies which version of JavaScript to output 
+  (e.g., old ES5 for older browsers, or modern ES2022).
+- Rules & Strictness: Sets how strictly TypeScript checks your code 
+  for potential errors, type safety, and code quality.
+- File Tracking: Tells the compiler exactly which directories and 
+  files to include or exclude from the build process.
+
+
+------------------------------------------------------------------------
+3. BASE ANATOMY EXAMPLE
+------------------------------------------------------------------------
+Here is a typical tsconfig.json file layout used in modern projects:
+
+{
+  "compilerOptions": {
+    "target": "ES2022",         // Compile output into modern JavaScript
+    "module": "NodeNext",       // Handles how files import/export modules
+    "outDir": "./dist",         // Where to place compiled JavaScript files
+    "rootDir": "./src",         // Where your source TypeScript files live
+    "strict": true,             // Turns on all strict type-checking options
+    "esModuleInterop": true,    // Fixes module compatibility issues
+    "skipLibCheck": true        // Speeds up builds by skipping types in node_modules
+  },
+  "include": ["src/**/*"],      // Compile everything inside the src folder
+  "exclude": ["node_modules"]   // Never look inside the node_modules folder
+}
+
+
+------------------------------------------------------------------------
+4. CORE CONFIGURATION OPTIONS EXPLAINED
+------------------------------------------------------------------------
+- "strict": true
+  The most important flag. It turns on rules like 'noImplicitAny' (errors 
+  if a type is missing) and 'strictNullChecks' (prevents crashes from 
+  unhandled null/undefined values).
+
+- "target": "ES6" (or similar)
+  If you write modern code like classes or arrow functions, setting target 
+  to an older version will automatically rewrite them into older browser-
+  compatible code during compilation.
+
+- "outDir": "./dist"
+  Keeps your project workspace clean by routing all compiled JavaScript 
+  production assets into a separate folder, away from your source code.
+
+
+Task 18:
+Code
+banking-app/
+ ├── backend/
+ │    ├── src/
+ │    │    ├── index.ts
+ │    │    ├── routes/
+ │    │    │    └── accountRoutes.ts
+ │    │    ├── controllers/
+ │    │    │    └── accountController.ts
+ │    │    ├── models/
+ │    │    │    └── account.ts
+ │    │    └── services/
+ │    │         └── accountService.ts
+ └── frontend/
+      └── Angular project (ng new banking-ui)
+
+
+
+

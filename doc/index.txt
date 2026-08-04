@@ -5,3 +5,10 @@ Day-4: DSA, Java Collections
 Day-5: Java Multithreading, Java 8 Features
 Day-6: Java 8 Continuation and Lambda Practice, SOLID Principals, Introduction to JUnit, JVM
 Day-7: More into JUnit
+Day-8: Spring Fundamentals
+Day-9: Springboot
+Day-10: Spring Continuation, MVC, Actuator, Caching, Thymeleaf 
+Day-11: Spring Continuation, Mockito, Unit Testing
+Day-12: DBMS Concepts
+Day-13: PostgreSQL
+Day-14: Git Collaboration, Typescript, 
