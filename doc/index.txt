@@ -12,3 +12,6 @@ Day-11: Spring Continuation, Mockito, Unit Testing
 Day-12: DBMS Concepts
 Day-13: PostgreSQL
 Day-14: Git Collaboration, Typescript, 
+Day-15: Angular, RESTFul/ REST APIs, 
+Day-16: Angular Continuation: Masking, Pipes, bundling, CRUD Operations, Firebase Deployment, 
+        Unit Testing

@@ -1,0 +1,403 @@
+Day 16 - 06th Aug 2026
+
+Task 1:
+In yesterday's project can you implement a custom pipe to mask the account number..
+9.30 top 9.36
+
+Task 2:
+Also use currency pipe for the amount.
+
+For eg In you dashboard.component.ts a sample code for your ref.
+
+import { CurrencyPipe } from '@angular/common';
+
+And
+
+@Component({
+ selector: 'app-dashboard',
+ standalone: true,
+ imports: [CurrencyPipe],
+ template: `
+   <h2>Account Dashboard</h2>
+   <p>Balance: {{ balance | currency: 'INR' }}</p>
+ `,
+})
+
+
+Task 3:
+
+Create  a service banking.service.ts or fund-transfer.service.ts
+
+Http requests.. Use the Crud operations for – post , get, delete, patch ….
+
+import { HttpClient } from '@angular/common/http';
+ 
+
+9.50 to 10.00 to 10.07
+
+Task 4:
+
+Create authentication for your account’s id and password..
+For eg : auth.service.ts
+
+And then add a protection card to your auth.service - like if he is valid user he has to see the transactions..
+Name it as auth.gaurd.ts
+
+Task 5:
+Create a shared module fro all your pipes to be bundles ..
+For eg:
+shared.module.ts
+
+11.10 to 11.15
+
+Task 6:
+
+Create  auth.module.ts  for your login and register components.ts
+11.17 to 11.23
+
+ 
+Till 2.15
+
+
+Deploying our project 
+
+npm install -g firebase-tools
+
+Firebase login
+	Connect to your account
+
+			Get started with project —> 
+Go to Firebase Console → Add Project → Name it (e.g., banking-app)
+
+There enable hosting service..
+
+Build Angular Project
+bash
+ng build --configuration production
+This generates the dist/your-app folder.
+
+Move to the dist folder 
+And 
+
+Firebase init hosting 
+Select your Firebase project.
+Set dist/your-app as the public directory.
+Configure as a Single Page App (answer “Yes” when asked)
+
+Firebase deploy
+
+Check for url..
+
+https://banking-app.web.app
+
+
+
+
+================================================================================================================================================
+After deployment 
+===============================================================================================================================================
+
+Task 7:
+
+Write unit test cases for banking service and login components.
+
+
+For eg for my 
+
+banking.service.ts
+@Injectable({ providedIn: 'root' })
+export class BankingService {
+ getBalance(accountId: string): number {
+   if (accountId === '123') return 5000;
+   return 0;
+ }
+
+
+ transferFunds(from: string, to: string, amount: number): boolean {
+   if (amount > 0 && from !== to) return true;
+   return false;
+ }
+}
+
+
+Unit testing
+
+import { TestBed } from '@angular/core/testing';
+import { BankingService } from './banking.service';
+
+
+describe('BankingService', () => {
+ let service: BankingService;
+
+
+ beforeEach(() => {
+   TestBed.configureTestingModule({});
+   service = TestBed.inject(BankingService);
+ });
+
+
+ it('should return balance for valid account', () => {
+   expect(service.getBalance('123')).toBe(5000);
+ });
+
+
+ it('should return 0 for invalid account', () => {
+   expect(service.getBalance('999')).toBe(0);
+ });
+
+
+ it('should allow valid fund transfer', () => {
+   expect(service.transferFunds('123', '456', 1000)).toBeTrue();
+ });
+
+
+ it('should reject transfer to same account', () => {
+   expect(service.transferFunds('123', '123', 1000)).toBeFalse();
+ });
+});
+
+
+For login.component.ts
+
+@Component({
+ selector: 'app-login',
+ template: `<button (click)="login()">Login</button>`,
+})
+export class LoginComponent {
+ loggedIn = false;
+ login() {
+   this.loggedIn = true;
+ }
+}
+
+
+Unit test fpr login component
+
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { LoginComponent } from './login.component';
+
+
+describe('LoginComponent', () => {
+ let component: LoginComponent;
+ let fixture: ComponentFixture<LoginComponent>;
+
+
+ beforeEach(() => {
+   TestBed.configureTestingModule({
+     declarations: [LoginComponent],
+   });
+   fixture = TestBed.createComponent(LoginComponent);
+   component = fixture.componentInstance;
+ });
+
+
+ it('should set loggedIn to true on login', () => {
+   component.login();
+   expect(component.loggedIn).toBeTrue();
+ });
+});
+
+
+
+
+========================================================================
+Juz fyi.. Only
+
+Pipes 
+mask-account.pipe.ts
+
+
+import { Pipe, PipeTransform } from '@angular/core';
+
+
+@Pipe({
+ name: 'maskAccount',
+ standalone: true
+})
+export class MaskAccountPipe implements PipeTransform {
+ transform(value: string): string {
+   if (!value) return '';
+   const visible = value.slice(-4);
+   return 'XXXX-XXXX-' + visible;
+ }
+}
+
+
+Impoert mask in account-details.component.ts
+
+import { Component , OnInit} from '@angular/core';
+import { AccountService } from './account.service';
+import { MaskAccountPipe } from './mask-account.pipe';
+
+
+@Component({
+ selector: 'app-account-details',
+ standalone: true,
+ imports: [MaskAccountPipe], // <-- import the pipe here
+ // templateUrl: './account-details.component.html',
+ template: `
+   <h3>Account Details</h3>
+   <ul>
+     @for (account of accounts; track account) {
+       <li>{{ account.name }} - {{ account.number | maskAccount }}</li>
+     }
+   </ul>
+ `,
+})
+export class AccountDetailsComponent implements OnInit{
+ accounts: any[] = [];
+
+
+ constructor(private accountService: AccountService) {}
+
+
+ ngOnInit() {
+   this.accountService.getAccounts().subscribe((data) => {
+     this.accounts = data as any[];
+   });
+ }
+}
+
+
+
+—---------------------------
+
+fundTransfer.service.ts
+
+import { Injectable } from '@angular/core';
+import {NotificationService} from './notification.service';
+@Injectable({
+ providedIn: 'root'
+})
+export class FundTransferService {
+ constructor(private notificationService: NotificationService) {}
+
+
+ transferFunds(fromAccount: string, toAccount: string, amount: number): string {
+   const result = `₹${amount} transferred from ${fromAccount} to ${toAccount}`;
+   this.notificationService.notifyUser(result);
+   return result;
+ }
+}
+
+
+banking.service.ts
+
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+
+@Injectable({ providedIn: 'root' })
+export class BankingService {
+ private apiUrl = 'https://api.mybank.com'; // replace with your backend
+
+
+ constructor(private http: HttpClient) {}
+
+
+ transferFunds(data: { fromAccount: string; toAccount: string; amount: number }): Observable<any> {
+   return this.http.post(`${this.apiUrl}/transfer`, data).pipe(
+     catchError(err => {
+       console.error('Transfer failed:', err);
+       return throwError(() => new Error('Transfer request failed. Please try again.'));
+     })
+   );
+ }
+
+
+ getTransactions(accountId: string): Observable<any[]> {
+   return this.http.get<any[]>(`${this.apiUrl}/accounts/${accountId}/transactions`).pipe(
+     catchError(err => {
+       console.error('Fetching transactions failed:', err);
+       return throwError(() => new Error('Could not load transactions.'));
+     })
+   );
+ }
+}
+auth.service.ts
+
+import { Injectable } from '@angular/core';
+
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+ private loggedIn = false;
+
+
+ login(username: string, password: string): boolean {
+   if (username === 'user' && password === 'pass123') {
+     this.loggedIn = true;
+     return true;
+   }
+   return false;
+ }
+
+
+ logout() {
+   this.loggedIn = false;
+ }
+
+
+ isLoggedIn(): boolean {
+   return this.loggedIn;
+ }
+}
+
+auth.gaurd.ts
+
+import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
+import { AuthService } from './auth.service';
+
+
+@Injectable({ providedIn: 'root' })
+export class AuthGuard implements CanActivate {
+ constructor(
+   private authService: AuthService,
+   private router: Router,
+ ) {}
+
+
+ canActivate(): boolean {
+   if (this.authService.isLoggedIn()) {
+     return true;
+   } else {
+     this.router.navigate(['/login']);
+     return false;
+   }
+ }
+}
+
+shared.module.ts
+
+import { NgModule } from '@angular/core';
+import { MaskAccountPipe } from './mask-account.pipe';
+
+
+@NgModule({
+ declarations: [],
+ exports: [MaskAccountPipe],
+ imports: [MaskAccountPipe],
+})
+export class SharedModule {}
+
+
+auth.module.ts
+
+import {NgModule} from "@angular/core";
+import { LoginComponent } from './login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterComponent } from './register.component';
+
+
+@NgModule({
+ declarations: [LoginComponent, RegisterComponent],
+ imports: [ReactiveFormsModule],
+})
+export class AuthModule {}
+
+
+—---------------------------------------------------
+

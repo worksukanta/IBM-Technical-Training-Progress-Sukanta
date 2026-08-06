@@ -1,0 +1,24 @@
+<h1>Employee List</h1>
+
+<ul>
+  @for(employee of employees(); track employee.id) {
+    <li>
+      <div>
+
+          <h3>{{ employee.name }}</h3>
+
+          <p>Department : {{ employee.department }}</p>
+
+          <p>Salary : ₹{{ employee.salary }}</p>
+
+          <hr>
+
+      </div>
+
+    </li>
+  }
+</ul>
+
+<button (click)="addEmployee()">
+    Add Employee
+</button>

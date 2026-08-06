@@ -1,0 +1,680 @@
+Day 14 - 05th Aug 2026
+
+Task 1:
+What is angular? Explain briefly.
+Angular is a TypeScript framework, specially used for building frontend web applications.
+
+Task 2:
+What is data binding? Explain.
+How many types of data bindings do you have .. can you explain them.
+========================================================================
+ANGULAR DATA BINDING OVERVIEW
+========================================================================
+
+1. DEFINITION
+------------------------------------------------------------------------
+Data binding is a core feature in Angular that automatically synchronizes 
+data between the application component code (TypeScript) and the user 
+interface layout (HTML template). It eliminates the need for manual DOM 
+manipulation.
+
+
+2. THE FOUR TYPES OF DATA BINDING
+------------------------------------------------------------------------
+
+A. INTERPOLATION
+   * Syntax:    {{ propertyName }}
+   * Direction: Code to View (One-way)
+   * Purpose:   Embeds dynamic text directly into HTML elements.
+   * Example:   <h1>Welcome {{ username }}</h1>
+
+B. PROPERTY BINDING
+   * Syntax:    [elementProperty]="propertyName"
+   * Direction: Code to View (One-way)
+   * Purpose:   Dynamically sets HTML element properties or attributes.
+   * Example:   <button [disabled]="isButtonDisabled">Submit</button>
+
+C. EVENT BINDING
+   * Syntax:    (eventName)="methodName()"
+   * Direction: View to Code (One-way)
+   * Purpose:   Listens for user interactions to trigger code logic.
+   * Example:   <button (click)="saveData()">Save</button>
+
+D. TWO-WAY BINDING
+   * Syntax:    [(ngModel)]="propertyName"
+   * Direction: View to Code & Code to View (Bi-directional)
+   * Purpose:   Keeps inputs and component properties instantly in sync.
+   * Example:   <input [(ngModel)]="userEmail">
+
+
+3. PRIMARY BENEFITS
+------------------------------------------------------------------------
+* No Boilerplate: Removes the need for manual 'getElementById' selectors.
+* Real-time UI:   The interface responds instantly to changes in state.
+* Clean Design:   Maintains a strict separation between logic and layout.
+========================================================================
+
+
+Task 3:
+Why do you need Angular? Can you give some advantages of using angular with description.
+========================================================================
+ADVANTAGES OF USING ANGULAR
+========================================================================
+
+1. OVERVIEW
+------------------------------------------------------------------------
+Angular is ideal for enterprise-grade web applications. It provides a 
+complete, highly standardized platform that eliminates the need to piece 
+together fragmented third-party libraries for core features.
+
+
+2. KEY ADVANTAGES & DESCRIPTIONS
+------------------------------------------------------------------------
+
+A. OUT-OF-THE-BOX ECOSYSTEM (OPINIONATED)
+   * Description: Includes official, built-in tools for routing, form 
+                  validation, HTTP requests, and security.
+   * Benefit:     Teams avoid configuration fatigue and ensure a highly 
+                  consistent codebase across all developers.
+
+B. NATIVE TYPESCRIPT INTEGRATION
+   * Description: Built from the ground up on TypeScript, enforcing strict 
+                  typing, robust auto-completion, and refactoring tools.
+   * Benefit:     Catches coding bugs during development rather than at 
+                  runtime in front of end-users.
+
+C. COMPONENT-BASED ARCHITECTURE
+   * Description: Divides the user interface into independent, isolated, 
+                  and reusable UI building blocks.
+   * Benefit:     Makes massive applications modular, predictable, and 
+                  much easier to maintain and update.
+
+D. BUILT-IN DEPENDENCY INJECTION (DI)
+   * Description: Automatically delivers required services, data sources, 
+                  and APIs to components when they initialize.
+   * Benefit:     Decouples code components, resulting in highly flexible, 
+                  scalable, and unit-testable software.
+
+E. FINE-GRAINED REACTIVITY (SIGNALS)
+   * Description: Tracks precisely where application data is rendered 
+                  across the user interface.
+   * Benefit:     Updates only the exact HTML elements that changed, 
+                  delivering blazing-fast rendering speeds.
+
+F. SYSTEMATIC TEAM MAINTAINABILITY
+   * Description: Enforces a strict, predictable folder and file structure 
+                  managed via the powerful Angular CLI tool.
+   * Benefit:     Drastically reduces developer onboarding time since all 
+                  Angular projects follow the exact same blueprint.
+========================================================================
+
+
+Task 4;
+What is Rest API?
+RestAPI stands for Representational State Transfer API(Application programming interfaces). 
+It is an API design/architectural style of writing APIs with following RESTFul rules, like we need 
+to use specific request methods, specific  status codes etc according to the characteristics of 
+the request.
+
+Task 5:
+Why do we use Rest API?
+========================================================================
+REST API OVERVIEW & ADVANTAGES
+========================================================================
+
+1. DEFINITION
+------------------------------------------------------------------------
+A REST API (Representational State Transfer Application Programming 
+Interface) is an architectural style for designing networked applications. 
+It uses standard HTTP requests (GET, POST, PUT, DELETE) to allow 
+completely different software applications to communicate and transfer data 
+over the internet securely.
+
+
+2. WHY WE USE REST APIs
+------------------------------------------------------------------------
+
+A. SEPARATION OF CLIENT AND SERVER
+   * Description: Disconnects the front-end user interface from the back-end 
+                  database and server logic.
+   * Benefit:     Developers can update or change the mobile or web UI 
+                  without breaking the core business data systems.
+
+B. PLATFORM INDEPENDENCE (LANGUAGE AGNOSTIC)
+   * Description: Communicates using universal formats (primarily JSON or XML) 
+                  over standard web protocols.
+   * Benefit:     An Angular front-end (TypeScript) can seamlessly talk to 
+                  a back-end server written in Python, Java, or C#.
+
+C. HIGH SCALABILITY & STATELESSNESS
+   * Description: Every individual client API request contains all the information 
+                  necessary to understand and complete that request.
+   * Benefit:     The server does not store user session state, allowing 
+                  it to handle millions of users across multiple servers easily.
+
+D. STANDARD HTTP METHODS
+   * Description: Map directly to basic database CRUD actions:
+                  - GET:    Read / Retrieve data
+                  - POST:   Create new data
+                  - PUT:    Update existing data
+                  - DELETE: Remove data
+   * Benefit:     Provides a predictable and highly intuitive workflow 
+                  for developers globally.
+
+E. EXCELLENT CACHING CAPABILITIES
+   * Description: Allows server responses to be labeled as cacheable or 
+                  non-cacheable by the web infrastructure.
+   * Benefit:     Reduces server loads and vastly improves application response 
+                  times for recurring queries.
+========================================================================
+
+
+Task 6:
+What are single Page Applications?
+========================================================================
+SINGLE-PAGE APPLICATIONS (SPAs)
+========================================================================
+
+1. DEFINITION
+------------------------------------------------------------------------
+A Single-Page Application (SPA) is a web application or website that 
+interacts with the user by dynamically rewriting the current web page, 
+rather than loading entire new pages from a server. Famous examples include 
+Gmail, Google Maps, and Netflix.
+
+
+2. HOW IT WORKS (SPA VS. TRADITIONAL MULTI-PAGE APPLICATION)
+------------------------------------------------------------------------
+
+* Traditional Web: Clicking a link requests a brand new HTML page from 
+                   the server. The screen turns blank momentarily and 
+                   reloads all assets (headers, scripts, styles).
+* SPA Approach:     The server sends a single, minimal HTML file upon the 
+                   first request. As the user navigates, JavaScript or 
+                   TypeScript dynamically updates only the parts of the 
+                   page that changed, fetching raw data via REST APIs.
+
+
+3. CORE ADVANTAGES
+------------------------------------------------------------------------
+
+A. BLAZING-FAST SPEED & FLUID EXPERIENCE
+   * Description: No full-page reloads occur after the initial load.
+   * Benefit:     Transitions between views feel instantaneous, mimicking 
+                  the smooth experience of a desktop or mobile application.
+
+B. REDUCED SERVER LOAD
+   * Description: The server only handles the initial file delivery and 
+                  subsequent lightweight JSON data transfers.
+   * Benefit:     Saves massive network bandwidth and reduces server 
+                  processing overhead.
+
+C. EFFECTIVE LOCAL CACHING
+   * Description: SPAs can store local data and application state directly 
+                  on the user's device.
+   * Benefit:     The application can continue working efficiently even 
+                  during sudden internet disconnections.
+
+
+4. CORE DISADVANTAGES
+------------------------------------------------------------------------
+
+A. SLOWER INITIAL LOAD TIME
+   * Description: The browser must download the entire application script 
+                  and framework files upfront.
+   * Benefit/Risk: The first visit can take slightly longer to render.
+
+B. COMPLEX SEO OPTIMIZATION
+   * Description: Because content is rendered dynamically via JavaScript, 
+                  search engine crawlers can struggle to index the pages.
+   * Solution:    Requires Server-Side Rendering (SSR) setups like 
+                  Angular SSR to bypass this issue.
+========================================================================
+
+
+Task 7:
+Explain modules, components and services in Angular.
+========================================================================
+ANGULAR CORE BUILDING BLOCKS: MODULES, COMPONENTS, & SERVICES
+========================================================================
+
+1. OVERVIEW
+------------------------------------------------------------------------
+Angular applications are structured around three fundamental building 
+blocks that work together to separate the layout, business logic, and 
+organizational structure of your project.
+
+
+2. THE THREE CORE BLOCKS
+------------------------------------------------------------------------
+
+A. MODULES (NgModule)
+   * Role:        The Container & Organizer
+   * Description: A logical container used to group related components, 
+                  directives, pipes, and services into cohesive blocks 
+                  of functionality. 
+   * Analogy:     Think of a module as a shipping crate or a box that 
+                  packages all the tools needed for one specific room 
+                  of a house.
+   * Core Note:   Modern Angular applications can also use standalone 
+                  components, which bypass the need for traditional 
+                  modules by managing their own dependencies.
+
+B. COMPONENTS
+   * Role:        The User Interface & View Layout
+   * Description: The visible building blocks of the application. Every 
+                  component controls a patch of the screen and consists 
+                  of an HTML template (structure), CSS (styles), and 
+                  a TypeScript class (UI logic).
+   * Analogy:     If the application is a house, a component is a visible 
+                  fixture like a window, a door, or a kitchen sink.
+   * Key Trait:   Components should only handle UI presentation logic 
+                  and user events. They should never fetch data directly.
+
+C. SERVICES
+   * Role:        The Data Provider & Business Logic
+   * Description: Non-visual TypeScript classes that contain reusable 
+                  business logic, handle data calculation, or fetch 
+                  external server data via REST APIs.
+   * Analogy:     Services are like the hidden plumbing, electricity, 
+                  and infrastructure running behind the walls of the house.
+   * Key Trait:   Services use Dependency Injection (DI) to deliver data 
+                  to any component that requests it, allowing multiple 
+                  components to share the exact same logic.
+
+
+3. HOW THEY WORK TOGETHER
+------------------------------------------------------------------------
+1. A MODULE imports the overall tools required for a feature.
+2. A COMPONENT displays the user interface on the screen.
+3. The Component injects a SERVICE to fetch backend data.
+4. The SERVICE fetches raw JSON data from a REST API and gives it back.
+5. The COMPONENT uses Data Binding to display that data to the user.
+========================================================================
+
+
+Task 8:
+In data binding can you explain Property Binding ,Event Binding, String Interpolation, Two way data binding
+Done Already
+
+Task 9:
+What Are decorators? Explain types of decorators.
+========================================================================
+ANGULAR DECORATORS
+========================================================================
+
+1. DEFINITION
+------------------------------------------------------------------------
+Decorators are functions that add metadata to a class, method, property, 
+or parameter in TypeScript. In Angular, decorators act like tags or 
+instructions that tell the Angular compiler how to process, configure, 
+and instantiate a piece of code. They always begin with the '@' symbol.
+
+
+2. THE FOUR MAIN TYPES OF DECORATORS
+------------------------------------------------------------------------
+
+A. CLASS DECORATORS
+   * Purpose:     Configures a class and dictates its high-level role.
+   * Key Examples:
+     - @Component():  Turns a basic class into a user interface block. 
+                      Accepts metadata linking it to HTML and CSS files.
+     - @Directive():  Declares a class as an attribute modifier for HTML 
+                      elements (without needing a dedicated template).
+     - @Injectable(): Tells Angular that this service class can have 
+                      dependencies injected into it by the framework.
+     - @NgModule():   Defines a class as an Angular module to bundle and 
+                      organize related components and services.
+
+B. PROPERTY DECORATORS
+   * Purpose:     Configures specific variable properties inside a class.
+   * Key Examples:
+     - @Input():      Allows a child component to receive data from its 
+                      parent component.
+     - @Output():     Allows a child component to send custom event signals 
+                      upward to its parent component.
+     - @ViewChild():  Queries and grabs a direct reference to a child 
+                      component or HTML element inside the layout.
+
+C. METHOD DECORATORS
+   * Purpose:     Attaches metadata to specific functions within a class.
+   * Key Examples:
+     - @HostListener(): Listens for system or user events on the host 
+                        HTML element (e.g., listening for a window resize 
+                        or a mouse click event).
+
+D. PARAMETER DECORATORS
+   * Purpose:     Modifies arguments inside a class constructor.
+   * Key Examples:
+     - @Inject():     Explicitly tells Angular which token or dependency 
+                      to provide to a constructor parameter.
+     - @Optional():   Tells Angular that a specific dependency is not 
+                      strictly required, preventing application crashes 
+                      if that service is missing.
+
+
+3. ANALOGY
+------------------------------------------------------------------------
+Think of a standard TypeScript class as a generic blank shipping box. 
+A decorator is like a shipping label slapped on top of it. The label 
+tells the carrier (the Angular compiler) exactly what is inside the 
+box ("Fragile Component") and how it should be handled ("Inject Service").
+========================================================================
+
+
+Task 10:
+What are annotations in angular?
+========================================================================
+ANNOTATIONS IN ANGULAR
+========================================================================
+
+1. DEFINITION & THE CONCEPTUAL DIFFERENCE
+------------------------------------------------------------------------
+In the context of Angular, "Annotations" and "Decorators" are often used 
+interchangeably by developers, but they have distinct technical origins:
+
+* Annotations: A purely declarative mechanism (pioneered in AngularJS 2's 
+               early design) that attaches metadata arrays directly to 
+               a class, without modifying how the class operates.
+* Decorators:  A feature native to TypeScript/JavaScript that wraps a 
+               target class or property in a function to dynamically 
+               modify its behavior at runtime.
+
+NOTE: Modern Angular uses TypeScript Decorators (like @Component) under 
+      the hood to evaluate and apply this metadata configuration.
+
+
+2. HOW ANGULAR PROCESSES ANNOTATIONS AS METADATA
+------------------------------------------------------------------------
+When you apply a decorator to a class, you pass a configuration object 
+containing fields. Angular's compiler reads these fields as structural 
+"annotations" to understand how to render and run your code:
+
+A. selector
+   * Purpose:  Defines the custom HTML tag name used to inject and 
+               render this component inside other templates.
+   * Example:  selector: 'app-user-profile' -> Used as <app-user-profile>
+
+B. templateUrl / template
+   * Purpose:  Points to the external HTML file or contains inline HTML 
+               code defining the structural layout of the view.
+   * Example:  templateUrl: './user-profile.component.html'
+
+C. styleUrls / styleUrl
+   * Purpose:  Points to the CSS/SCSS sheets containing encapsulated, 
+               isolated styles strictly applied to this component.
+   * Example:  styleUrl: './user-profile.component.css'
+
+D. providers
+   * Purpose:  An array of dependency injection tokens or services 
+               that this component and its children can access.
+   * Example:  providers: [UserService]
+
+
+3. SUMMARY KEY TAKEAWAY
+------------------------------------------------------------------------
+Think of annotations as the raw metadata properties (the blueprint spec sheet) 
+and the decorator (@ symbol) as the active factory machinery that reads 
+that spec sheet to construct the live, functional Angular component.
+========================================================================
+
+Task Extra: difference between Annotations and Decorators
+========================================================================
+DIFFERENCE BETWEEN ANNOTATIONS AND DECORATORS
+========================================================================
+
+1. KEY CONCEPTUAL DIFFERENCES
+------------------------------------------------------------------------
+While developers often use these terms interchangeably in Angular, they 
+represent two entirely different mechanisms for handling code metadata:
+
+* ANNOTATIONS: Pure metadata configuration. They simply attach descriptive 
+               information (like a tag or a list of options) to a class. 
+               They do not change or execute any code by themselves.
+               
+* DECORATORS:  Active design patterns/functions. They take the target class 
+               and explicitly modify, wrap, or extend its internal 
+               mechanics and behaviors at runtime.
+
+
+2. SIDE-BY-SIDE TECHNICAL COMPARISON
+------------------------------------------------------------------------
+CRITERIA         | ANNOTATIONS                   | DECORATORS
+-----------------+-------------------------------+----------------------
+Nature           | Declarative (Just a label)    | Imperative (A function)
+Execution        | Does nothing on its own. It   | It is an active function 
+
+                 | requires an external compiler | that wraps and changes 
+                 | to look at it and parse data. | the target class instantly.
+Language Support | Not part of JavaScript or     | Part of official ECMAScript 
+
+                 | official TypeScript specs.    | & native TypeScript specs.
+Mechanism        | Creates a "metadata" array    | Modifies the class 
+
+                 | on the class object.          | constructor or prototype.
+
+
+3. HISTORICAL CONTEXT IN ANGULAR
+------------------------------------------------------------------------
+* Early Angular (AtScript): 
+  Originally, Angular developers planned to use a custom compiler language 
+  called AtScript, which used "Annotations" to configure elements.
+  
+* Modern Angular (TypeScript): 
+  Angular abandoned AtScript and adopted TypeScript. TypeScript natively 
+  supported the `@` symbol syntax via "Decorators". 
+
+Therefore, when you write `@Component({...})` today, you are technically 
+using a TypeScript Decorator to supply Angular with architectural 
+annotations.
+========================================================================
+
+
+Task 11:
+In the below code snippet what are we doing .. can you explain..
+
+// parent component
+import { Component } from '@angular/core';
+@Component({
+   selector: 'app-parent',
+   template: `
+<app-child [childMessage]="parentMessage"></app-child>
+`,
+   styleUrls: ['./parent.component.css']
+})
+export class ParentComponent{
+   parentMessage = "message from parent"
+   constructor() { }
+}
+// child component
+import { Component, Input } from '@angular/core';
+@Component({
+   selector: 'app-child',
+   template: `Say {{ childMessage }}`,
+   styleUrls: ['./child.component.css']
+})
+export class ChildComponent {
+   @Input() childMessage: string;
+   constructor() { }
+}
+
+
+--> These codes are creating two components, one is parent component and another one is child
+component, it's more component inside component
+
+Task 12:
+Can you create a typescript class with a constructor and a function.
+yesterday done
+
+Task 13:
+There is something called eager loading. What do you mean by eager and lazy loading?
+========================================================================
+EAGER LOADING VS. LAZY LOADING IN ANGULAR
+========================================================================
+
+1. DEFINITIONS
+------------------------------------------------------------------------
+* EAGER LOADING: The default loading strategy where all feature modules, 
+                 components, and assets are bundled, downloaded, and 
+                 compiled immediately when the user first opens the app.
+                 
+* LAZY LOADING:  An optimization strategy where specific feature modules 
+                 or routing views are kept separate and are only 
+                 downloaded from the server when a user navigates to 
+                 that specific route.
+
+
+2. SIDE-BY-SIDE TECHNICAL COMPARISON
+------------------------------------------------------------------------
+CRITERIA         | EAGER LOADING                 | LAZY LOADING
+-----------------+-------------------------------+----------------------
+Initial Download | Large initial bundle file size | Small initial bundle file size 
+
+                 | because everything loads max. | because features are split.
+Initial App Load | Slower. The user waits while  | Faster. The user gets 
+
+                 | unnecessary views load upfront.| the main app screen instantly.
+Route Transition | Instant. Navigating to views  | Slight delay on first click 
+
+                 | is fast since code is local.  | while fetching the file chunk.
+Best Used For    | Critical, small, or universal | Large, specialized features 
+
+                 | views (Home, Login screens).  | (Admin Panels, Dashboards).
+
+
+3. HOW THEY WORK IN CODE (ROUTING EXAMPLES)
+------------------------------------------------------------------------
+
+A. EAGER ROUTING CODE
+   * The component class is imported directly at the top of the file.
+   * Example:
+     import { DashboardComponent } from './dashboard.component';
+     const routes = [{ path: 'dashboard', component: DashboardComponent }];
+
+B. LAZY ROUTING CODE
+   * Uses a dynamic JavaScript dynamic import statement via 'loadChildren'.
+   * Example:
+     const routes = [{
+       path: 'admin',
+       loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+     }];
+
+
+4. KEY SUMMARY
+------------------------------------------------------------------------
+Think of Eager Loading like packing a giant suitcase with all your winter 
+and summer clothes for a short weekend trip—it makes your bags incredibly 
+heavy upfront. Lazy Loading is like traveling light and buying or renting 
+your winter gear only if you actually arrive at a snowy destination.
+========================================================================
+
+Task 14:
+What is an observable response?
+========================================================================
+           ANGULAR OBSERVABLE RESPONSES VS TRADITIONAL RESPONSES
+========================================================================
+
+1. THE CORE DIFFERENCES
+------------------------------------------------------------------------
+* Lazy Execution: 
+  Promises trigger network requests immediately upon creation. 
+  Observables are lazy; they do not send the HTTP request until you 
+  explicitly call .subscribe().
+
+* Cancellation: 
+  Promises cannot be natively cancelled once sent. Observables can be 
+  cancelled at any time by calling .unsubscribe(), which prompts 
+  Angular to abort the underlying browser HTTP request.
+
+* Stream Handling: 
+  Promises resolve exactly once with a single value. Observables 
+  natively support multiple data emissions over time, making them 
+  ideal for handling real-time data streams or file upload progress.
+
+* Functional Operators: 
+  Observables pass data through RxJS pipes, allowing you to use 
+  built-in operators like map, filter, retry, or switchMap to 
+  transform the response stream seamlessly.
+
+
+2. SERVICE APPLICATION (FETCHING DATA)
+------------------------------------------------------------------------
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface User {
+  id: number;
+  name: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+  private apiUrl = 'https://example.com';
+
+  constructor(private http: HttpClient) {}
+
+  // Scenario A: Returns an Observable that emits just the JSON body data
+  getUsersData(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl);
+  }
+
+  // Scenario B: Returns an Observable that emits the full HttpResponse 
+  // object (including status codes, headers, etc.)
+  getFullUserResponse(): Observable<HttpResponse<User[]>> {
+    return this.http.get<User[]>(this.apiUrl, { observe: 'response' });
+  }
+}
+
+
+3. COMPONENT APPLICATION (CONSUMING THE STREAM)
+------------------------------------------------------------------------
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UserService, User } from './user.service';
+import { Subscription } from 'rxjs';
+
+@Component({
+  selector: 'app-user-list',
+  template: `
+    <h3>User List</h3>
+    <div *ngFor="let user of users">
+      {{ user.name }}
+    </div>
+  `
+})
+export class UserListComponent implements OnInit, OnDestroy {
+  users: User[] = [];
+  private subscription!: Subscription;
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    // Subscribing to the Observable response to trigger the API call
+    this.subscription = this.userService.getUsersData().subscribe({
+      next: (data: User[]) => {
+        this.users = data; // Handles successful data delivery
+      },
+      error: (err) => {
+        console.error('HTTP Request failed:', err); // Handles errors
+      },
+      complete: () => {
+        console.log('Stream closed successfully.'); // Handles stream closure
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Aborts the HTTP request if the user navigates away before it finishes
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+}
+========================================================================
+
+
+Task 15:
+What is the flow of your Angular project.. Explain with an ex.
+
