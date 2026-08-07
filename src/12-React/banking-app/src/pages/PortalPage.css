@@ -1,0 +1,14 @@
+.portal-container {
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.portal-title {
+  font-family: monospace;
+}
+
+.portal-desc {
+  color: #88888e;
+  margin-bottom: 30px;
+}

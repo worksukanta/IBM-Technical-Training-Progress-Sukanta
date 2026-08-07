@@ -1,0 +1,32 @@
+.ledger-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ledger-header-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ledger-title {
+  font-family: monospace;
+  margin: 0;
+}
+
+.clear-btn {
+  background: transparent;
+  color: #ff3b30;
+  border: 1px dashed #ff3b30;
+  padding: 6px 12px;
+  font-family: monospace;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.clear-btn:hover {
+  background: #ff3b30;
+  color: #ffffff;
+}

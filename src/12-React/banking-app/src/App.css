@@ -1,0 +1,79 @@
+/* Custom Global Dark Theme Reset */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0a0a0c;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bank-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #29292e;
+  display: flex;
+  flex-direction: column; /* 👈 Stack elements vertically on small screens */
+  gap: 15px;
+  align-items: center;
+  background-color: #121214;
+}
+
+.bank-logo {
+  margin: 0;
+  font-size: 22px;
+  font-family: monospace;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.bank-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  overflow-x: auto; /* 👈 Allows horizontal swipe tracking if the screen gets ultra small */
+  white-space: nowrap; /* 👈 Force typography layout onto a single horizontal line */
+  padding-bottom: 5px;
+}
+
+/* Nav Link adjustments */
+.nav-link {
+  color: #88888e;
+  text-decoration: none;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 13px; /* 👈 Slightly smaller font size to fit neatly across device layers */
+  transition: color 0.2s ease;
+  letter-spacing: 0.5px;
+  padding: 4px 6px;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #00ff66;
+  text-shadow: 0 0 5px rgba(0, 255, 102, 0.4);
+}
+
+.main-content {
+  padding: 30px 20px;
+}
+
+/* --- Responsive Layout Rules for Desktops/Laptops --- */
+@media (min-width: 600px) {
+  .bank-header {
+    flex-direction: row; /* 👈 Change back to horizontal layout on wide screens */
+    justify-content: space-between;
+    gap: 0;
+    padding: 20px;
+  }
+  
+  .bank-nav {
+    width: auto;
+    gap: 20px;
+    padding-bottom: 0;
+  }
+  
+  .nav-link {
+    font-size: 14px;
+  }
+}

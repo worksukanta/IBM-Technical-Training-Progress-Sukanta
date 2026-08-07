@@ -1,0 +1,84 @@
+.home-container {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.home-title {
+  font-family: monospace;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.home-subtitle {
+  color: #88888e;
+  margin-bottom: 40px;
+}
+
+.balance-card {
+  background: #121214;
+  border: 1px solid #29292e;
+  padding: 30px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-bottom: 30px;
+}
+
+.balance-label {
+  font-family: monospace;
+  font-size: 14px;
+  color: #88888e;
+  letter-spacing: 1px;
+}
+
+.balance-display {
+  font-family: monospace;
+  font-size: 36px;
+  color: #00ff66;
+  margin-top: 10px;
+  display: block;
+}
+
+/* Analytics dashboard dashboard summary layout */
+.analytics-grid {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.metric-box {
+  flex: 1;
+  background: #16161a;
+  border-left: 3px solid #333;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.metric-box.income { border-left-color: #00ff66; }
+.metric-box.expense { border-left-color: #ff3b30; }
+
+.metric-title {
+  font-size: 12px;
+  font-family: monospace;
+  color: #888;
+}
+
+.metric-value {
+  font-size: 20px;
+  font-family: monospace;
+  margin-top: 5px;
+}
+
+.recent-wrapper {
+  max-width: 500px;
+  margin: 40px auto 0 auto;
+  text-align: left;
+}
+
+.recent-title {
+  font-family: monospace;
+  color: #88888e;
+  border-bottom: 1px solid #29292e;
+  padding-bottom: 8px;
+}

@@ -1,0 +1,55 @@
+.amount-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 24px auto;
+  align-items: center;
+  max-width: 300px;
+  text-align: center;
+}
+
+.amount-label {
+  font-size: 13px;
+  font-family: monospace;
+  color: #00ff66;
+}
+
+.amount-field {
+  padding: 12px;
+  font-size: 16px;
+  font-family: monospace;
+  background-color: #121214;
+  border: 1px solid #29292e;
+  border-radius: 4px;
+  color: #ffffff;
+  outline: none;
+  text-align: center;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.counter {
+  padding: 12px 24px;
+  font-family: monospace;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #121214;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.debit-amount { color: #ff3b30; border: 1px solid #ff3b30; }
+.debit-amount:hover { background: #ff3b30; color: #fff; }
+
+.credit-amount { color: #00ff66; border: 1px solid #00ff66; }
+.credit-amount:hover { background: #00ff66; color: #121214; }
+
+.alert {
+  font-family: monospace;
+  color: #ff3b30;
+}
